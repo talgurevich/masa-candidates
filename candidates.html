@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מסע אל האופק - מיונים מחזור ב׳</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+        }
+        header h1 { font-size: 1.8em; margin-bottom: 5px; }
+        header p { opacity: 0.8; font-size: 1.1em; }
+
+        /* Day section */
+        .day-section { margin-bottom: 30px; }
+        .day-header {
+            background: #16213e;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .day-header .count {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        /* Schedule table */
+        .schedule {
+            background: white;
+            border-radius: 0 0 8px 8px;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            overflow: hidden;
+        }
+        .schedule table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .schedule th {
+            background: #f0f2f5;
+            padding: 10px 15px;
+            text-align: right;
+            font-size: 0.85em;
+            color: #666;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .schedule tr.row {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .schedule tr.row:hover {
+            background: #eef2ff;
+        }
+        .schedule tr.row td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+        .schedule .col-time {
+            font-weight: 600;
+            color: #0f3460;
+            white-space: nowrap;
+            width: 110px;
+            font-size: 0.95em;
+        }
+        .schedule .col-name {
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 1.05em;
+            white-space: nowrap;
+        }
+        .schedule .col-summary {
+            font-size: 0.88em;
+            color: #555;
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .schedule .col-city {
+            font-size: 0.85em;
+            color: #888;
+            white-space: nowrap;
+        }
+        .schedule tr.break-row td {
+            background: #f8f8f8;
+            text-align: center;
+            color: #999;
+            font-size: 0.85em;
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Status styles */
+        .status-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            background: #eee;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+        .status-dot:hover { transform: scale(1.2); }
+        .status-dot.accepted { background: #4caf50; border-color: #388e3c; }
+        .status-dot.rejected { background: #e53935; border-color: #c62828; }
+        .schedule tr.row.accepted td { background: #e8f5e9; }
+        .schedule tr.row.accepted:hover td { background: #c8e6c9; }
+        .schedule tr.row.rejected td { background: #ffebee; }
+        .schedule tr.row.rejected:hover td { background: #ffcdd2; }
+        .col-status { width: 50px; text-align: center; }
+        .status-summary {
+            font-size: 0.7em;
+            display: flex;
+            gap: 10px;
+        }
+        .status-summary .accepted-count { color: #4caf50; }
+        .status-summary .rejected-count { color: #e53935; }
+
+        /* Detail page */
+        .detail-page {
+            display: none;
+        }
+        .detail-page.active {
+            display: block;
+        }
+        .main-page.hidden {
+            display: none;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #16213e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+        .back-btn:hover { background: #0f3460; }
+
+        .detail-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .detail-card h2 {
+            font-size: 1.6em;
+            margin-bottom: 5px;
+            color: #1a1a2e;
+        }
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h3 {
+            font-size: 1em;
+            color: #0f3460;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .detail-section p {
+            color: #333;
+            font-size: 0.95em;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border-right: 3px solid #0f3460;
+        }
+        .detail-section .notes-p {
+            background: #fff8e1;
+            border-right-color: #f9a825;
+            color: #5d4037;
+        }
+        .mentor-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            background: #f0f2f5;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+        }
+        .nav-btn:hover { background: #e0e2e5; }
+        .nav-btn:disabled { opacity: 0.4; cursor: default; }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .container { padding: 10px; }
+            header { padding: 20px 15px; border-radius: 8px; margin-bottom: 20px; }
+            header h1 { font-size: 1.3em; }
+            header p { font-size: 0.9em; }
+            .day-header { padding: 10px 15px; font-size: 1em; }
+
+            /* Hide table, show mobile list */
+            .schedule table { display: none; }
+            .schedule .mobile-list { display: block; }
+
+            .mobile-list {
+                padding: 0;
+            }
+            .mobile-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 14px 15px;
+                border-bottom: 1px solid #f0f0f0;
+                cursor: pointer;
+                transition: background 0.15s;
+            }
+            .mobile-item:active {
+                background: #eef2ff;
+            }
+            .mobile-item .m-time {
+                font-weight: 600;
+                color: #0f3460;
+                font-size: 0.85em;
+                white-space: nowrap;
+                min-width: 75px;
+                padding-top: 2px;
+            }
+            .mobile-item .m-content {
+                flex: 1;
+                min-width: 0;
+            }
+            .mobile-item .m-name {
+                font-weight: 700;
+                font-size: 1em;
+                color: #1a1a2e;
+            }
+            .mobile-item .m-summary {
+                font-size: 0.82em;
+                color: #666;
+                margin-top: 3px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .mobile-item .m-city {
+                font-size: 0.75em;
+                color: #aaa;
+                margin-top: 4px;
+            }
+            .mobile-item.accepted { background: #e8f5e9; }
+            .mobile-item.accepted:active { background: #c8e6c9; }
+            .mobile-item.rejected { background: #ffebee; }
+            .mobile-item.rejected:active { background: #ffcdd2; }
+            .mobile-item .m-status {
+                display: flex;
+                align-items: center;
+                padding-top: 2px;
+            }
+            .mobile-break {
+                text-align: center;
+                padding: 10px;
+                color: #999;
+                font-size: 0.82em;
+                background: #f8f8f8;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            /* Detail page mobile */
+            .detail-card { padding: 18px; border-radius: 8px; }
+            .detail-card h2 { font-size: 1.3em; }
+            .detail-meta { gap: 10px; font-size: 0.85em; }
+            .detail-section p { padding: 10px; font-size: 0.9em; }
+            .back-btn { padding: 8px 16px; font-size: 0.9em; }
+            .nav-btn { padding: 10px 14px; }
+        }
+
+        /* Desktop: hide mobile list */
+        @media (min-width: 641px) {
+            .schedule .mobile-list { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- MAIN PAGE -->
+    <div class="main-page" id="mainPage">
+        <header>
+            <h1>מסע אל האופק - אופק טק</h1>
+            <p>מיונים מחזור ב׳ | 22-24 מרץ 2026</p>
+        </header>
+
+        <div class="day-section">
+            <div class="day-header">
+                <span>יום א׳ 22.3</span>
+                <span class="status-summary" data-date="22.3"></span>
+                <span class="count">12 מיזמים</span>
+            </div>
+            <div class="schedule" id="schedule-sunday"></div>
+        </div>
+
+        <div class="day-section">
+            <div class="day-header">
+                <span>יום ג׳ 24.3</span>
+                <span class="status-summary" data-date="24.3"></span>
+                <span class="count">8 מיזמים</span>
+            </div>
+            <div class="schedule" id="schedule-tuesday"></div>
+        </div>
+    </div>
+
+    <!-- DETAIL PAGE -->
+    <div class="detail-page" id="detailPage">
+        <button class="back-btn" onclick="showMain()">→ חזרה לרשימה</button>
+        <div class="detail-card" id="detailContent"></div>
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn" onclick="navigateCandidate(-1)">→ הקודם</button>
+            <button class="nav-btn" id="nextBtn" onclick="navigateCandidate(1)">הבא ←</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const candidates = [
+    {
+        id: 0, date: "22.3", day: "א׳", time: "10:30-10:40",
+        name: "יהונתן חדד", phone: "052-8362616", email: "yehonatan8765@gmail.com", city: "נתניה",
+        mentor: "אוריאל בן אלול", cohort: "נתניה נובמבר 2025", linkedin: "yehonatan765",
+        background: "בן 25 מנתניה, עסק בשיווק בנישת אדריכלים וצילום. עבד עם 13 לקוחות והצליח להביא לידים רבים. עבר תכנית שיווק של בית המשווקים למשך 8 חודשים.",
+        motivation: "שלושה עסקים למדתי שיווק ומכירות. אף אחד לא עזר כי למדתי מקריאה וקורסים. לקוחותיי נפלו מאותה סיבה שהייתי אמור ליפול.",
+        problem: "שוק פרסום דיגיטלי עם כסף רב שנזרק לאוויר ללא פתרון למדידת ROI אמיתי לעסקים קטנים ובינוניים.",
+        solution: "מערכת שמרכזת נתונים שיווקיים ומכירתיים, מנתחת אוטומטית ומציגה תובנות ROI.",
+        tech: "מערכת SaaS בענן המחברת פלטפורמות פרסום, מערכות לידים ו-CRM עם דשבורד אנליטיקה בזמן אמת ו-AI.",
+        audience: "בעלי עסקים קטנים ובינוניים שמוציאים כסף על שיווק.",
+        competitors: "HubSpot, Salesforce, Google Analytics, HockeyStack.",
+        businessModel: "מודל מנוי חודשי SaaS, מחיר בהדרגה בהתאם לערך.",
+        extra: "בת זוגי מתכנתת בגמא וסטודנטית למדעי המחשב. משפחה של מתכנתים תעזור.",
+        notes: "להדגיש את הייחודיות ואת ROI."
+    },
+    {
+        id: 1, date: "22.3", day: "א׳", time: "10:50-11:00",
+        name: "יהונתן חדד", phone: "052-8362616", email: "yehonatan8765@gmail.com", city: "נתניה",
+        mentor: "", cohort: "נתניה נובמבר 2025", linkedin: "yehonatan765",
+        background: "ספורטאי (טניס, פדל, גלישה, צלילה). כמעט לא היו חברים. מסע אל האופק שינה זאת.",
+        motivation: "קושי אישי במציאת אנשים וחברים. המיזם החברתי של לארה הראה את חשיבות הפן החברתי.",
+        problem: "אנשים מתקשים בתקשורת בין-אישית, חסרי ביטחון עצמי, מרגישים בודדים.",
+        solution: "פלטפורמה המחברת בין אנשים דרך פעילות ספורטיבית וחברתית משותפת.",
+        tech: "מערכת מקוונת המתאימה בין משתמשים לפי עניין ורמה, יוצרת חיבור בטוח.",
+        audience: "אנשים שמרגישים לבד, צעירים שרוצים חברים וקבוצה.",
+        competitors: "אפליקציות קודמות ישראליות וקבוצות פייסבוק למציאת שותפי ספורט.",
+        businessModel: "מנוי סמלי, תשלום קטן על אירועים, שיתופי פעולה עם מתחמי ספורט.",
+        extra: "מזכיר את מסע אל האופק שמחבר אנשים דרך חוויה משותפת.",
+        notes: "מודל עסקי."
+    },
+    {
+        id: 2, date: "22.3", day: "א׳", time: "11:10-11:20",
+        name: "עדן בועז מימון", phone: "054-6138331", email: "Edenboazmaimon@gmail.com", city: "ראשון לציון",
+        mentor: "", cohort: "ראשון לציון נובמבר 2024", linkedin: "",
+        background: "יזם חברתי, סובל מקוליטיס כרוני במצב קשה. בחר לימודים אקדמיים למרות אתגרים בריאותיים. פיתח שיטות למידה יצירתיות.",
+        motivation: "התנסות אישית עמוקה עם מחלה כרונית וחוסר בתשתית מסודרת לניהול המחלה.",
+        problem: "פער מהותי בניהול מחלות כרוניות — מידע מפוזר, חוסר תיאום בין אנשי מקצוע, ללא פלטפורמה אינטגרטיבית בישראל.",
+        solution: "פלטפורמה אינטגרטיבית המאגדת ניהול רפואי, בירוקרטי, קהילתי ותודעתי.",
+        tech: "פלטפורמה דיגיטלית עם סריקת מסמכים, איגוד נתונים, מעקב סימפטומים וקהילה.",
+        audience: "מתמודדים עם מחלות כרוניות, בעיקר בני 18+.",
+        competitors: "קיימים פתרונות חלקיים אך אין פלטפורמה אינטגרטיבית בישראל.",
+        businessModel: "קופות חולים, ביטוח לאומי, משרד הבריאות, שיתופי פעולה.",
+        extra: "זו שליחות אישית, לא רק עסק. רצון להעצים אנשים.",
+        notes: "להסביר היבט טכנולוגי וחיסיון רפואי."
+    },
+    {
+        id: 3, date: "22.3", day: "א׳", time: "11:30-11:40",
+        name: "יצחק ליאור", phone: "058-6719686", email: "Isaclior8@gmail.com", city: "ירושלים",
+        mentor: "", cohort: "ירושלים מחזור 3", linkedin: "",
+        background: "אוהב אתגרים וספורט, ניסיון באבטחת שגרירויות, מדריך צלילה חופשית, סיים שיקום ברך.",
+        motivation: "פנייה לביצוע פינוי-בינוי בבניין ההורים. חוסר ידע יכול להוביל לטעויות יקרות.",
+        problem: "חוסר ידע ובהירות על זכויות בנייה — אדם פשוט לא יכול לדעת לבד.",
+        solution: "ריכוז מידע בפלטפורמה דיגיטלית עם בדיקת זכויות ו-AI.",
+        tech: "דיגיטליזציה ו-AI לאוטומטיזציה של בדיקת זכויות והערכת שווי.",
+        audience: "אזרחים עם נכסי נדל״ן שעלולים לעבור פינוי-בינוי.",
+        competitors: "אין מפת בדיקה ברשת.",
+        businessModel: "מנוי חודשי או תשלום חד פעמי.",
+        extra: "מחפש שותף מתחום הנדל״ן שיתרום מבחינה מקצועית.",
+        notes: ""
+    },
+    {
+        id: 4, date: "22.3", day: "א׳", time: "11:50-12:00",
+        name: "גיא סוקולצקי", phone: "054-5713737", email: "guysok102@gmail.com", city: "קריית ים",
+        mentor: "", cohort: "קריות מחזור 60", linkedin: "",
+        background: "בן 23, חייל משוחרר, יזם בעסק וידאו ו-AI. סגר חנות אינטרנטית בעקבות צפי שוק.",
+        motivation: "חברים מבקשים עזרה בתחומים שונים. מסע אל האופק הגדיל את המעגלים.",
+        problem: "צעירים יודעים דברים אך אין כסף — רוצים ללמוד בלי לבזבז על תואר.",
+        solution: "בנק זמן — שכר בידע, להחליף שיעורים.",
+        tech: "אפליקציה של בנק הזמן, פלטפורמה חברתית ללמידה הדדית.",
+        audience: "צעירים, חיילים משוחררים, גיל שלישי.",
+        competitors: "פלטפורמות קנייה של קורסים בלבד — אין שכר ישיר של זמן בזמן.",
+        businessModel: "מכירת פרסומות בתוך הפלטפורמה, קניות קטנות.",
+        extra: "",
+        notes: ""
+    },
+    {
+        id: 5, date: "22.3", day: "א׳", time: "12:10-12:20",
+        name: "אדם אספוב", phone: "052-7787636", email: "adamasafov11@gmail.com", city: "פרדס חנה",
+        mentor: "", cohort: "נתניה", linkedin: "",
+        background: "חובש קרבי בצבא, סגן מנהל ברנואר, שתי קורסי יזמות.",
+        motivation: "איכות הסביבה ורצון להנגיש תשתיות למי שאין להם.",
+        problem: "חוסר בתשתיות מים וניקוז, בעיות מים מזוהמים.",
+        solution: "מערכת מודולרית ניידת המספקת מים וניקוז עם מחזור.",
+        tech: "מסננים, מערכת מים, בדיקות זיהום, מחזור מים.",
+        audience: "סטודנטים במעונות, קמפינגים, מכבסות, בתים זעירים, קרוונים.",
+        competitors: "יש מתחרים אך לא מצליחים לספק חבילה מלאה.",
+        businessModel: "תשלום חד פעמי ומסננים שצריך להחליף.",
+        extra: "",
+        notes: "ייחודיות מול מתחרים, טכנולוגיה, קהל יעד."
+    },
+    {
+        id: 6, date: "22.3", day: "א׳", time: "12:30-12:40",
+        name: "לירון מלמד", phone: "054-6386885", email: "melamed655@gmail.com", city: "פתח תקווה",
+        mentor: "", cohort: "פתח תקווה", linkedin: "",
+        background: "בת 21, לוחמת במשמר הגבול שלוש שנים. השתחררה ביולי 2025. אתגר במעבר מצבא לאזרחות.",
+        motivation: "עומס מנטלי יומיומי עם מידע מפוזר בהודעות ופתקים שונים.",
+        problem: "הפחתת עומס מנטלי וניהול יעיל של מידע יומיומי — משימות, פגישות, רשימות.",
+        solution: "מערכת חכמה שמזהה מידע חשוב, מסדרת אותו, ומוודאת ביצוע.",
+        tech: "NLP, עיבוד שפה טבעית, למידת מכונה, זיהוי הקשר.",
+        audience: "צעירות וצעירים בגילאי 18-40 בעומס יומיומי.",
+        competitors: "Todoist, Microsoft To Do, Google Calendar, Evernote, Notion.",
+        businessModel: "מודל Freemium עם מנוי פרימיום חודשי/שנתי.",
+        extra: "",
+        notes: ""
+    },
+    {
+        id: 7, date: "22.3", day: "א׳", time: "13:10-13:20",
+        name: "דניאל בן צור", phone: "054-9252188", email: "danielben8245@gmail.com", city: "ירושלים",
+        mentor: "", cohort: "ירושלים", linkedin: "",
+        background: "קבע לעצמו מטרה להגיע ל-TOP 3 באירופה בספורט והצליח אחרי שלוש שנים. בשירות צבאי הוביל פרויקטים חשובים.",
+        motivation: "ראה את הבעיה משני הכיוונים — בעל עסק קטן וחברים משפיענים, כולם בכאוס.",
+        problem: "מיקרו-משפיענים משתמשים בעסק לבדם, ללא סדר, ללא חוזים.",
+        solution: "מערכת דיגיטלית שמחברת משפיענים עם מותגים עם ניהול אוטומטי מקצה לקצה.",
+        tech: "פלטפורמת SaaS עם תהליך עבודה אוטומטי — יצירת חוזים, עיבוד תשלומים, מדיה קיט דינמי עם AI.",
+        audience: "מיקרו-משפיענים, עסקים קטנים-בינוניים.",
+        competitors: "פלטפורמות אנטרפרייז לענקים בלבד — לא למשפיענים קטנים.",
+        businessModel: "עמלת הצלחה מעסקה, מנוי חודשי לפיצ׳רים מתקדמים.",
+        extra: "",
+        notes: ""
+    },
+    {
+        id: 8, date: "22.3", day: "א׳", time: "13:50-14:00",
+        name: "אורי גרשוני", phone: "051-2594854", email: "Ori.gershoni@gmail.com", city: "אשדות יעקב מאוחד",
+        mentor: "", cohort: "טבריה", linkedin: "",
+        background: "בתקופת שינוי מקצועי, עלייה מהיא״ם, משוחרר מצבא. עובד בשעות לא פשוטות, אוהב ללמד.",
+        motivation: "הרצון לחזק ערבות הדדית ויצירת מערכת שבה אנשים עוזרים אחד לשני.",
+        problem: "אנשים רוצים להתנדב אך אין מסגרת פשוטה המחברת ביניהם להזדמנויות.",
+        solution: "פלטפורמה המחברת מתנדבים להזדמנויות, צובר נקודות למימוש שירותים קהילתיים.",
+        tech: "מנוע חיפוש והתאמה, ניהול קהילה, מעקב התנדבות, מערכת נקודות.",
+        audience: "בני נוער ומבוגרים צעירים המעוניינים להתנדב וליצור קהילה.",
+        competitors: "פתרונות חלקיים קיימים.",
+        businessModel: "גיוס משקיעים פרטיים, דמי מנוי קטנים, שיתופי פעולה ארגוניים.",
+        extra: "זה לא רק פלטפורמה אלא דרך ליצור קהילה תומכת.",
+        notes: "ביחד עם שני שרגא, לדבר איתו על המודל העסקי."
+    },
+    {
+        id: 9, date: "22.3", day: "א׳", time: "14:10-14:40",
+        name: "מולוגטא דוד טגניה", phone: "054-9739384", email: "david369te@gmail.com", city: "עפולה",
+        mentor: "", cohort: "עפולה 2025", linkedin: "",
+        background: "בן 26, הנדסאי חשמל, הקים עסק אינטרנטי ללימודי שפה אמהרית.",
+        motivation: "לאחר הקמת פלטפורמה ללמידה, חווה את מורכבות יצירת תוכן איכותי.",
+        problem: "פער בין חזון פדגוגי ליכולת טכנית — תהליך יצירת חומרי לימוד אינטראקטיביים איטי ויקר.",
+        solution: "אוטומציית AI להמרת חומרי לימוד לפעילויות אינטראקטיביות מותאמות.",
+        tech: "אוטומציית AI לניתוח חומרים ויצירת משחקים אינטראקטיביים.",
+        audience: "יוצרי קורסים, מוסדות אקדמיים, בתי ספר, חברות.",
+        competitors: "Udemy, Schooler, Kahoot, Genially.",
+        businessModel: "מודל SaaS עם תמחור אטרקטיבי.",
+        extra: "מגיע עם הבנה עמוקה של צרכי המשתמשים מניסיון אישי.",
+        notes: ""
+    },
+    {
+        id: 10, date: "22.3", day: "א׳", time: "14:30-14:40",
+        name: "עידו חן", phone: "050-9191054", email: "ido87chen@gmail.com", city: "הוד השרון",
+        mentor: "", cohort: "נתניה נובמבר 2025", linkedin: "",
+        background: "בן 21, ספורטאי מרוצי אופנועים — אלוף ישראל, מטבח רכש בחיל הים, ידע בטכנולוגיה.",
+        motivation: "פער טכנולוגי בין עסקים מסורתיים לעולם החדש.",
+        problem: "עסקים קטנים מתקשים לאמץ כלי התייעלות ו-AI — פער טכנולוגי מול עסקים גדולים.",
+        solution: "שילוב נכסים דיגיטליים עם AI, שיווק ופרסום פשוט, CRM מינימליסטי.",
+        tech: "פלטפורמת Web/Mobile עם מנועי AI, אוטומציה ופשטות שימוש מקסימלית.",
+        audience: "עסקים קטנים ובינוניים רחוקים מעולם הטכנולוגיה.",
+        competitors: "אין שחקן מרכזי המציע פתרון הוליסטי.",
+        businessModel: "מנויים חודשיים בהבדל גמיש.",
+        extra: "",
+        notes: "לדבר איתו למקד רעיון — בעיה אחת שמזהה כי הכי כואבת."
+    },
+    {
+        id: 11, date: "22.3", day: "א׳", time: "14:50-15:00",
+        name: "רן עוקשי", phone: "054-6109225", email: "ranokashi237@gmail.com", city: "נתניה",
+        mentor: "", cohort: "נתניה מחזור 38", linkedin: "",
+        background: "בן 25, בוגר מסע אל האופק, עובד כאיש מכירות בקימאמה. משוחרר מגבעתי.",
+        motivation: "גדל בבית שבו התנהלות כלכלית לא נכונה. צורך בחבר כלכלי שמלמד.",
+        problem: "מוטיבציה נמוכה בניהול כסף, קושי בחיסכון, עומס כלכלי — חיסכון לדירה נראה בלתי אפשרי.",
+        solution: "פלטפורמה — חבר כלכלי שמזין מידע יומי ומעזר לתכנון.",
+        tech: "אפליקציה של התנהלות כלכלית-פיננסית עם AI, זיהוי חיובים ודפוסי הוצאות.",
+        audience: "כל אדם החל מנוער שעובד ורוצה להתנהל ולחסוך טוב יותר.",
+        competitors: "Rise Up וחברות אחרות להתנהלות כלכלית.",
+        businessModel: "מנוי חודשי, יועצים כלכליים משלמים לפיתוח.",
+        extra: "החזון שכלכלת ישראל תהיה החזקה בעולם.",
+        notes: "שידגיש ייחודיות, חיבור עם פעמונים."
+    },
+    {
+        id: 12, date: "24.3", day: "ג׳", time: "10:50-11:20",
+        name: "ירין חמדאן", phone: "052-5084882", email: "Yareen010701@gmail.com", city: "ג׳ולס",
+        mentor: "", cohort: "ג׳ולס", linkedin: "",
+        background: "סטודנטית להנדסת חשמל ואלקטרוניקה. השתתפה בהאקתון טכנולוגי וזכתה במקום שני. צוות: בשארה חביב ופרנסיס עבוד.",
+        motivation: "הפרויקט נולד ממציאות ביטחונית בישראל — חשיפה של חיילים לחומרי נפץ.",
+        problem: "סיכון לחיילים ואזרחים בעבודה עם חפצים חשודים — צוותי חבלה נחשפים לסכנה.",
+        solution: "רובוט חכם ואוטונומי חלקית לטיפול בחפצים מסוכנים.",
+        tech: "מצלמות, חיישנים, בינה מלאכותית לזיהוי חפצים, זרוע (מניפולטור) לאינטראקציה פיזית.",
+        audience: "גופי ביטחון, צבא, יחידות חבלה, משטרה, רשויות מקומיות.",
+        competitors: "רובוטי חבלה קיימים יקרים ודורשים שליטה ידנית מלאה.",
+        businessModel: "מכירה או השכרה של מערכות, שירות תחזוקה.",
+        extra: "צוות עם רקע טכנולוגי עשיר.",
+        notes: "יזמת טובה — למקד מודל עסקי."
+    },
+    {
+        id: 13, date: "24.3", day: "ג׳", time: "11:30-12:00",
+        name: "מתן לביא", phone: "050-2076569", email: "matanlavi10@gmail.com", city: "מבוא ביתר",
+        mentor: "", cohort: "ירושלים", linkedin: "",
+        background: "עובד כמדריך בקורס Python לילדים. סטודנט שנה א׳ למתמטיקה ופסיכולוגיה. מורה פרטי למתמטיקה.",
+        motivation: "ראה שחומרי לימוד באנגלית ברמה גבוהה שלא מותאמת. הכין תרגילים ממוקדים בעצמו.",
+        problem: "תלמידים נתקעים בתרגילים — אדם אינו יודע ממה להתחיל, תרגול עצמאי עיוור למצב התלמיד.",
+        solution: "פלטפורמת תרגול אדפטיבית שמתפקדת כמורה פרטי בזמן אמת.",
+        tech: "אלגוריתם עצמאי לניתוח ופירוק תרגילים, מעקב התנהגות בזמן אמת.",
+        audience: "תלמידי חטיבות ביניים ותיכון. בעתיד: בתי ספר, מכינות.",
+        competitors: "כלי AI (Gemini, ChatGPT), Khan Academy, Photomath.",
+        businessModel: "מנויים עם עלויות תפעול נמוכות, מחיר אטרקטיבי.",
+        extra: "החיבור לרעיון מגיע ממקום אישי.",
+        notes: "להדגיש ייחודיות."
+    },
+    {
+        id: 14, date: "24.3", day: "ג׳", time: "12:10-12:20",
+        name: "מתן לביא", phone: "050-2076569", email: "matanlavi10@gmail.com", city: "מבוא ביתר",
+        mentor: "", cohort: "ירושלים", linkedin: "",
+        background: "סטודנט שנה א׳, מדריך Python, מורה פרטי.",
+        motivation: "שיחה עם אביו על מניפולציות שיווקיות ויוקר מחיה.",
+        problem: "אסימטריה של מידע — לצרכן אין יכולת להשוות סל קנייה שלם בזמן אמת.",
+        solution: "אפליקציה מבוססת על חוכמת ההמונים — איסוף נתונים מקבלות.",
+        tech: "חילוץ טקסט מתמונת קבלה (OCR), מיפוי שמות מוצרים לברקוד, ניתוח מחירים.",
+        audience: "כל מי שמבצע קנייה שבועית גדולה או מוגבל תקציב.",
+        competitors: "Pricez ואתרי השוואת מחירים.",
+        businessModel: "עיקר מפרסומות, שיתופים עם ספקים פרטיים.",
+        extra: "החיבור הוא הכי פרקטי ויומיומי.",
+        notes: "להציע לחבר עם אלעד חן."
+    },
+    {
+        id: 15, date: "24.3", day: "ג׳", time: "12:30-12:40",
+        name: "עידו אורייה יוסף", phone: "050-6805077", email: "ido4683@gmail.com", city: "פתח תקווה",
+        mentor: "", cohort: "פתח תקווה מחזור 46", linkedin: "",
+        background: "בן 24, לומד טיפול ונומרולוגיה, מאמין בעולם הרוחני.",
+        motivation: "הרבה אנשים לא יודעים שבעיות קשורות לחוסר איזון פנימי ולא לאירועים.",
+        problem: "צורך לטיפול בחוסר איזון בגוף (צ׳אקרות) — לא נגיש, צריך ללכת למטפל.",
+        solution: "מוצר — כפתור/מכשיר חשמלי שמתמגנט לגוף ומייצר ויברציה של סאונד.",
+        tech: "מכשיר אלקטרומגנטי המייצר תדרי סולפג׳יו עם אפליקציית ביופידבק.",
+        audience: "אנשים רוחניים, רפואה מונעת, מי שמחפש תשובה לכאב.",
+        competitors: "אפליקציות של תדרים אך לא מוצר פיזי כמתואר.",
+        businessModel: "",
+        extra: "",
+        notes: "מה הרעיון? מה המיזם? מה ההיבט הטכנולוגי?"
+    },
+    {
+        id: 16, date: "24.3", day: "ג׳", time: "13:10-13:40",
+        name: "ידידיה רבינוביץ", phone: "058-6735061", email: "yedidyayr@gmail.com", city: "ירושלים",
+        mentor: "", cohort: "ירושלים", linkedin: "",
+        background: "בן 22, אוהב מספרים ומערכות, סיים שירות צבאי מלא.",
+        motivation: "ישנם מוצרים וטכנולוגיות בחו״ל שאינן קיימות בארץ — הזדמנות ליזמים.",
+        problem: "ישראלים נתקלים במוצרים שימושיים בחו״ל ותוהים למה אין בארץ — תהליך ייבוא מורכב.",
+        solution: "פלטפורמה לליווי יזמים בתהליך ייבוא: ניתוח שוק, התאמה, רגולציה, חיבור לספקים.",
+        tech: "פלטפורמה דיגיטלית עם צ׳קליסט מסודר וקישור לפונקציות.",
+        audience: "יזמים עם רעיונות מוכחים מחו״ל.",
+        competitors: "פיתוח עסקי פרטני, פלטפורמות פיתוח עסקי.",
+        businessModel: "B2C למשתמשים, שת״פים עם משקיעים, שיתופי עסקים תומכים.",
+        extra: "העולם עובר ליישום רעיונות קיימים בשווקים חדשים.",
+        notes: "שיציג את המיזם ויחדד מה המודל העסקי."
+    },
+    {
+        id: 17, date: "24.3", day: "ג׳", time: "14:10-14:40",
+        name: "אמיר גבאי-טוטחאזן", phone: "054-8678146", email: "barak5030@gmail.com", city: "פתח תקווה",
+        mentor: "", cohort: "פתח תקווה נובמבר 2025", linkedin: "",
+        background: "בן 21, הטכנאי של הבית. בצבא: מנהל רשת, ראש צוות. משוחרר ביוני 2025. עובד בחברת מגדל כטכנאי PC ורשתות.",
+        motivation: "תסכול מתקלות שהיה צריך לפתור אך חסר תיעוד וסדר — ידע מתאדה.",
+        problem: "בזבוז זמן בפתרון בעיות שקיימות כבר בארגון — ידע קריטי בראש עובדים לא מתועד.",
+        solution: "מוח ארגוני שיתופי — תיעוד אקטיבי ללא מאמץ, AI שמתעד פתרונות אוטומטית.",
+        tech: "Speech-to-Expert Text, RAG, Semantic Search & Vector DB, זיהוי ויזואלי, QR.",
+        audience: "מפעלי תעשייה, חברות שירות, גופים ביטחוניים וצבאיים.",
+        competitors: "Slack, Teams, Microsoft — משמשות לתקשורת אך מידע הולך לאיבוד.",
+        businessModel: "B2B SaaS — מנוי חודשי לפי מספר משתמשים.",
+        extra: "החזון: להפוך כל עובד חדש למומחה מהיום הראשון.",
+        notes: ""
+    },
+    {
+        id: 18, date: "24.3", day: "ג׳", time: "14:50-15:00",
+        name: "יואב פרידמן", phone: "054-3531399", email: "fridmanyoav@gmail.com", city: "ראשון לציון",
+        mentor: "", cohort: "ראשון לציון נובמבר 2025", linkedin: "",
+        background: "גיל 24, רקע במחשוב. לימודי תיכון בפיזיקה והנדסה. בצבא: מנהל רשת בתקשוב.",
+        motivation: "כתבה על חוסר רצון דור Z בעבודות פשוטות — התחשב בצרכיו של הדור הצעיר.",
+        problem: "מוטיבציה נמוכה, צורך בגמישות — דור צעיר רוצה שעבודה תסתובב סביבו.",
+        solution: "פלטפורמה למשרות מזדמנות בטווח קצר עם שכר ידוע מראש.",
+        tech: "אפליקציה/אתר דומה לוולט עם פיתוח וניהול טכנולוגי.",
+        audience: "בעלי עסקים עם צורך בעובדים זמניים, אנשים המחפשים עבודות זמניות בגמישות.",
+        competitors: "סחבק (משרות 4-6 חודשים), וולט (משלוחים בלבד).",
+        businessModel: "מנוי חודשי לעסקים או עמלה מהמעסיק.",
+        extra: "",
+        notes: ""
+    },
+    {
+        id: 19, date: "24.3", day: "ג׳", time: "15:10-15:20",
+        name: "עמית בן שטרית", phone: "054-5864580", email: "amitbensheatrit@gmail.com", city: "אשדוד",
+        mentor: "", cohort: "אשדוד מחזור 54", linkedin: "",
+        background: "עובד כסקאוט כדורגל. מנהל קורסי הכשרה בישראכרט. פתח אינסטגרם לחיפוש שחקנים.",
+        motivation: "אתגר מקצועי — סקאוט לא יכול להיות בכל משחק. תוכן וידאו הולך לאיבוד.",
+        problem: "כישרונות לא מגיעים לקהל הנכון — סקאוטים ומועדונים מפספסים.",
+        solution: "פלטפורמה ייעודית המחברת שחקנים שמעלים קליפים ישירות לסקאוטים.",
+        tech: "פלטפורמה דיגיטלית עם מנוע חיפוש חכם, בהמשך ניתוח וידאו.",
+        audience: "סקאוטים, מנהלים, מועדוני כדורגל, סוכנים, אנליסטים. שחקנים צעירים ובוגרים.",
+        competitors: "פלטפורמות כלליות ורשתות חברתיות, מערכות דאטה מקצועיות.",
+        businessModel: "מודל SaaS — מנויים למקצוענים, חבילות ייעודיות, פרסום.",
+        extra: "היתרון המרכזי — היכרות עמוקה עם השטח.",
+        notes: ""
+    }
+];
+
+let currentIndex = 0;
+
+// Break times per day
+const breaks = {
+    "22.3": ["12:50-13:00"],
+    "24.3": ["12:50-13:00"]
+};
+
+// Status management
+const STATUS_KEY = 'masa-candidates-status';
+const STATUS_CYCLE = [null, 'accepted', 'rejected'];
+
+function getAllStatuses() {
+    try { return JSON.parse(localStorage.getItem(STATUS_KEY)) || {}; } catch(e) { return {}; }
+}
+
+function getStatus(id) {
+    return getAllStatuses()[id] || null;
+}
+
+function toggleStatus(id) {
+    const statuses = getAllStatuses();
+    const current = statuses[id] || null;
+    const nextIndex = (STATUS_CYCLE.indexOf(current) + 1) % STATUS_CYCLE.length;
+    const next = STATUS_CYCLE[nextIndex];
+
+    if (next) { statuses[id] = next; } else { delete statuses[id]; }
+    localStorage.setItem(STATUS_KEY, JSON.stringify(statuses));
+
+    // Update UI without full re-render
+    document.querySelectorAll(`[data-id="${id}"]`).forEach(el => {
+        el.classList.remove('accepted', 'rejected');
+        if (next) el.classList.add(next);
+        const dot = el.querySelector('.status-dot');
+        if (dot) {
+            dot.classList.remove('accepted', 'rejected');
+            if (next) dot.classList.add(next);
+        }
+    });
+    updateStatusCounts();
+}
+
+function updateStatusCounts() {
+    const statuses = getAllStatuses();
+    document.querySelectorAll('.status-summary').forEach(el => {
+        const date = el.dataset.date;
+        const ids = candidates.filter(c => c.date === date).map(c => c.id);
+        const accepted = ids.filter(id => statuses[id] === 'accepted').length;
+        const rejected = ids.filter(id => statuses[id] === 'rejected').length;
+        el.innerHTML = accepted || rejected
+            ? `<span class="accepted-count">${accepted} ✓</span><span class="rejected-count">${rejected} ✗</span>`
+            : '';
+    });
+}
+
+function renderSchedules() {
+    const sunday = candidates.filter(c => c.date === "22.3");
+    const tuesday = candidates.filter(c => c.date === "24.3");
+
+    document.getElementById('schedule-sunday').innerHTML = buildTable(sunday, "22.3");
+    document.getElementById('schedule-tuesday').innerHTML = buildTable(tuesday, "24.3");
+    updateStatusCounts();
+}
+
+function buildTable(items, date) {
+    // Build all time slots including breaks
+    const allSlots = [];
+    items.forEach(c => allSlots.push({ type: 'candidate', data: c }));
+
+    // Insert break
+    if (breaks[date]) {
+        breaks[date].forEach(b => {
+            allSlots.push({ type: 'break', time: b });
+        });
+    }
+
+    // Sort by start time
+    allSlots.sort((a, b) => {
+        const tA = a.type === 'break' ? a.time.split('-')[0] : a.data.time.split('-')[0];
+        const tB = b.type === 'break' ? b.time.split('-')[0] : b.data.time.split('-')[0];
+        return tA.localeCompare(tB);
+    });
+
+    // Desktop table
+    let html = `<table>
+        <thead><tr>
+            <th>שעה</th>
+            <th>שם</th>
+            <th>תקציר המיזם</th>
+            <th>עיר</th>
+            <th>סטטוס</th>
+        </tr></thead><tbody>`;
+
+    allSlots.forEach(slot => {
+        if (slot.type === 'break') {
+            html += `<tr class="break-row"><td colspan="5">הפסקה ${slot.time}</td></tr>`;
+        } else {
+            const c = slot.data;
+            const status = getStatus(c.id);
+            const statusClass = status ? ` ${status}` : '';
+            html += `<tr class="row${statusClass}" data-id="${c.id}" onclick="showDetail(${c.id})">
+                <td class="col-time">${c.time}</td>
+                <td class="col-name">${c.name}</td>
+                <td class="col-summary">${c.solution}</td>
+                <td class="col-city">${c.city}</td>
+                <td class="col-status"><span class="status-dot${statusClass}" onclick="event.stopPropagation(); toggleStatus(${c.id})"></span></td>
+            </tr>`;
+        }
+    });
+
+    html += `</tbody></table>`;
+
+    // Mobile list
+    html += `<div class="mobile-list">`;
+    allSlots.forEach(slot => {
+        if (slot.type === 'break') {
+            html += `<div class="mobile-break">הפסקה ${slot.time}</div>`;
+        } else {
+            const c = slot.data;
+            const mStatus = getStatus(c.id);
+            const mStatusClass = mStatus ? ` ${mStatus}` : '';
+            html += `<div class="mobile-item${mStatusClass}" data-id="${c.id}" onclick="showDetail(${c.id})">
+                <div class="m-time">${c.time}</div>
+                <div class="m-content">
+                    <div class="m-name">${c.name}</div>
+                    <div class="m-summary">${c.solution}</div>
+                    <div class="m-city">${c.city}</div>
+                </div>
+                <div class="m-status"><span class="status-dot${mStatusClass}" onclick="event.stopPropagation(); toggleStatus(${c.id})"></span></div>
+            </div>`;
+        }
+    });
+    html += `</div>`;
+
+    return html;
+}
+
+
+function showDetail(id) {
+    currentIndex = id;
+    const c = candidates[id];
+
+    const mentorHTML = c.mentor ? `<div class="mentor-badge">מנטור: ${c.mentor}</div>` : '';
+    const cohortHTML = c.cohort ? `<span>מחזור: ${c.cohort}</span>` : '';
+    const notesHTML = c.notes ? `<div class="detail-section"><h3>הערות צוות</h3><p class="notes-p">${c.notes}</p></div>` : '';
+    const extraHTML = c.extra ? `<div class="detail-section"><h3>מידע נוסף</h3><p>${c.extra}</p></div>` : '';
+    const audienceHTML = c.audience ? `<div class="detail-section"><h3>קהל יעד</h3><p>${c.audience}</p></div>` : '';
+    const competitorsHTML = c.competitors ? `<div class="detail-section"><h3>מתחרים</h3><p>${c.competitors}</p></div>` : '';
+    const bizHTML = c.businessModel ? `<div class="detail-section"><h3>מודל עסקי</h3><p>${c.businessModel}</p></div>` : '';
+    const motivationHTML = c.motivation ? `<div class="detail-section"><h3>מה הביא לרעיון</h3><p>${c.motivation}</p></div>` : '';
+
+    document.getElementById('detailContent').innerHTML = `
+        <h2>${c.name}</h2>
+        <div class="detail-meta">
+            <span>יום ${c.day} ${c.date}</span>
+            <span>${c.time}</span>
+            <span>${c.city}</span>
+            ${cohortHTML}
+            <span>${c.phone}</span>
+            <span>${c.email}</span>
+        </div>
+        ${mentorHTML}
+        <div class="detail-section">
+            <h3>רקע אישי</h3>
+            <p>${c.background}</p>
+        </div>
+        ${motivationHTML}
+        <div class="detail-section">
+            <h3>הבעיה שזוהתה</h3>
+            <p>${c.problem}</p>
+        </div>
+        <div class="detail-section">
+            <h3>הפתרון המוצע</h3>
+            <p>${c.solution}</p>
+        </div>
+        <div class="detail-section">
+            <h3>היבט טכנולוגי</h3>
+            <p>${c.tech}</p>
+        </div>
+        ${audienceHTML}
+        ${competitorsHTML}
+        ${bizHTML}
+        ${extraHTML}
+        ${notesHTML}
+    `;
+
+    document.getElementById('mainPage').classList.add('hidden');
+    document.getElementById('detailPage').classList.add('active');
+
+    document.getElementById('prevBtn').disabled = (id === 0);
+    document.getElementById('nextBtn').disabled = (id === candidates.length - 1);
+
+    window.scrollTo(0, 0);
+}
+
+function showMain() {
+    document.getElementById('mainPage').classList.remove('hidden');
+    document.getElementById('detailPage').classList.remove('active');
+    window.scrollTo(0, 0);
+}
+
+function navigateCandidate(dir) {
+    const newIndex = currentIndex + dir;
+    if (newIndex >= 0 && newIndex < candidates.length) {
+        showDetail(newIndex);
+    }
+}
+
+renderSchedules();
+</script>
+
+</body>
+</html>
