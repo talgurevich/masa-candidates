@@ -150,6 +150,10 @@
         .schedule tr.row.accepted:hover td { background: #c8e6c9; }
         .schedule tr.row.rejected td { background: #ffebee; }
         .schedule tr.row.rejected:hover td { background: #ffcdd2; }
+        .col-wa { width: 40px; text-align: center; }
+        .wa-icon { text-decoration: none; font-size: 1.15em; opacity: 0.7; transition: opacity 0.15s; }
+        .wa-icon:hover { opacity: 1; }
+        .m-wa { display: flex; align-items: center; padding-top: 2px; }
         .col-status { width: 50px; text-align: center; }
         .status-summary {
             font-size: 0.7em;
@@ -907,6 +911,16 @@ function renderSchedules() {
     updateStatusCounts();
 }
 
+function getWhatsappURL(c) {
+    const zoomLink = c.date === '22.3'
+        ? 'https://us06web.zoom.us/j/89695012960?pwd=099s5g4CtWPp4ikB7wXgQsmzIRbgAY.1'
+        : 'https://us06web.zoom.us/j/85112696992?pwd=GzcSJlaLa2WFhZboTDenhbjUF6iBBX.1';
+    const firstName = c.name.split(' ')[0];
+    const msg = `היי ${firstName}, תזכורת להיות מוכן/ה למצגת הזום שלך בשעה ${c.time} 🔗 ${zoomLink}`;
+    const phone = c.phone.replace(/[-\s]/g, '').replace(/^0/, '972');
+    return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
+
 function buildTable(items, date) {
     // Build all time slots including breaks
     const allSlots = [];
@@ -933,22 +947,25 @@ function buildTable(items, date) {
             <th>שם</th>
             <th>תקציר המיזם</th>
             <th>עיר</th>
+            <th></th>
             <th>סטטוס</th>
         </tr></thead><tbody>`;
 
     allSlots.forEach(slot => {
         if (slot.type === 'break') {
-            html += `<tr class="break-row"><td colspan="5">הפסקה ${slot.time}</td></tr>`;
+            html += `<tr class="break-row"><td colspan="6">הפסקה ${slot.time}</td></tr>`;
         } else {
             const c = slot.data;
             const status = getStatus(c.id);
             const statusClass = status ? ` ${status}` : '';
             const targetId = c.detailTarget;
+            const waURL = getWhatsappURL(c);
             html += `<tr class="row${statusClass}" data-id="${c.id}" onclick="showDetail(${targetId})">
                 <td class="col-time">${c.time}</td>
                 <td class="col-name">${c.name}</td>
                 <td class="col-summary">${c.summary}</td>
                 <td class="col-city">${c.city}</td>
+                <td class="col-wa"><a href="${waURL}" target="_blank" onclick="event.stopPropagation()" class="wa-icon" title="שלח תזכורת בוואטסאפ">📲</a></td>
                 <td class="col-status"><span class="status-dot${statusClass}" onclick="event.stopPropagation(); toggleStatus(${c.id})"></span></td>
             </tr>`;
         }
@@ -966,6 +983,7 @@ function buildTable(items, date) {
             const mStatus = getStatus(c.id);
             const mStatusClass = mStatus ? ` ${mStatus}` : '';
             const targetId = c.detailTarget;
+            const mWaURL = getWhatsappURL(c);
             html += `<div class="mobile-item${mStatusClass}" data-id="${c.id}" onclick="showDetail(${targetId})">
                 <div class="m-time">${c.time}</div>
                 <div class="m-content">
@@ -973,6 +991,7 @@ function buildTable(items, date) {
                     <div class="m-summary">${c.summary}</div>
                     <div class="m-city">${c.city}</div>
                 </div>
+                <a href="${mWaURL}" target="_blank" onclick="event.stopPropagation()" class="wa-icon m-wa">📲</a>
                 <div class="m-status"><span class="status-dot${mStatusClass}" onclick="event.stopPropagation(); toggleStatus(${c.id})"></span></div>
             </div>`;
         }
