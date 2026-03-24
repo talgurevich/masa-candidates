@@ -1033,16 +1033,7 @@ function showDetail(id) {
             <p>${c.solutionDetail}</p>
         </div>
         ${techHTML}
-        ${(() => {
-            const zoomLink = c.date === '22.3'
-                ? 'https://us06web.zoom.us/j/89695012960?pwd=099s5g4CtWPp4ikB7wXgQsmzIRbgAY.1'
-                : 'https://us06web.zoom.us/j/85112696992?pwd=GzcSJlaLa2WFhZboTDenhbjUF6iBBX.1';
-            const firstName = c.name.split(' ')[0];
-            const msg = \`היי \${firstName}, תזכורת להיות מוכן/ה למצגת הזום שלך בשעה \${c.time} 🔗 \${zoomLink}\`;
-            const phone = c.phone.replace(/[-\\s]/g, '').replace(/^0/, '972');
-            const waURL = \`https://wa.me/\${phone}?text=\${encodeURIComponent(msg)}\`;
-            return \`<a href="\${waURL}" target="_blank" class="whatsapp-btn">📲 שלח תזכורת בוואטסאפ</a>\`;
-        })()}
+        <a href="${getWhatsappURL(c)}" target="_blank" class="whatsapp-btn">📲 שלח תזכורת בוואטסאפ</a>
     `;
 
     document.getElementById('mainPage').classList.add('hidden');
