@@ -29,8 +29,11 @@
         .col-venture { color: #444; }
         .col-city { white-space: nowrap; color: #888; font-size: 0.84rem; }
         .col-pres { text-align: center; white-space: nowrap; }
+        .col-arrow { text-align: center; width: 36px; color: #94a3b8; font-size: 1.1rem; }
+        .data-row:hover .col-arrow { color: #22c55e; }
         .pres-link { background: #22c55e; color: white; padding: 4px 12px; border-radius: 14px; font-size: 0.78rem; font-weight: 500; text-decoration: none; display: inline-block; }
         .pres-link:hover { background: #1da851; }
+        .table-hint { text-align: center; color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px; }
         
         /* DETAIL */
         .detail-view { display: none; }
@@ -52,15 +55,29 @@
         .nav-btn:hover { background: #e0e2e5; }
         .nav-btn:disabled { opacity: 0.4; cursor: default; }
         
-        /* MOBILE */
+        /* MOBILE LIST */
+        .mobile-list { display: none; }
+        .mobile-item { background: white; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; transition: background 0.15s; display: flex; align-items: center; gap: 12px; }
+        .mobile-item:active { background: #f0fdf4; }
+        .mobile-num { font-weight: 700; color: #22c55e; font-size: 1rem; min-width: 24px; }
+        .mobile-content { flex: 1; min-width: 0; }
+        .mobile-name { font-weight: 600; color: #1a4a5e; font-size: 0.95rem; }
+        .mobile-venture { font-size: 0.84rem; color: #555; margin-top: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mobile-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .mobile-city { font-size: 0.78rem; color: #aaa; }
+        .mobile-pres { font-size: 0.75rem; }
+        .mobile-arrow { color: #94a3b8; font-size: 1.2rem; flex-shrink: 0; }
+
         @media (max-width: 700px) {
             .container { padding: 10px 8px 40px; }
             header { padding: 20px 12px; }
             header h1 { font-size: 1.4rem; }
-            .schedule-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .schedule-table thead th, .data-row td { padding: 8px 10px; font-size: 0.82rem; }
+            .schedule-table { display: none; }
+            .mobile-list { display: block; }
             .detail-card { padding: 16px; }
             .detail-card h2 { font-size: 1.2rem; }
+            .detail-section p { padding: 10px; font-size: 0.85rem; }
+            .nav-btn { padding: 10px 14px; }
         }
     </style>
 </head>
@@ -74,6 +91,7 @@
 
 <div class="container">
     <div class="main-view" id="mainView">
+        <p class="table-hint">לחצו על שורה לפרטים נוספים על היזם/ת והמיזם</p>
         <table class="schedule-table">
             <thead>
                 <tr>
@@ -82,6 +100,7 @@
                     <th>מיזם</th>
                     <th>עיר</th>
                     <th>מצגת</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -91,6 +110,7 @@
     <td class="col-venture">פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</td>
     <td class="col-city">ראשון לציון</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1KS7GRey53DOSC8VxRcPdUY4I2kl3qjiY/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(1)">
     <td class="col-num">2</td>
@@ -98,6 +118,7 @@
     <td class="col-venture">פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</td>
     <td class="col-city">ירושלים</td>
     <td class="col-pres"></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(2)">
     <td class="col-num">3</td>
@@ -105,6 +126,7 @@
     <td class="col-venture">פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</td>
     <td class="col-city">ירושלים</td>
     <td class="col-pres"></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(3)">
     <td class="col-num">4</td>
@@ -112,6 +134,7 @@
     <td class="col-venture">אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</td>
     <td class="col-city">עפולה</td>
     <td class="col-pres"></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(4)">
     <td class="col-num">5</td>
@@ -119,6 +142,7 @@
     <td class="col-venture">פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</td>
     <td class="col-city">הוד השרון</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1JqC4ENt9mE8eSrXPd0-TUhU-veF1LwI5/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(5)">
     <td class="col-num">6</td>
@@ -126,6 +150,7 @@
     <td class="col-venture">אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</td>
     <td class="col-city">נתניה</td>
     <td class="col-pres"><a href="https://drive.google.com/file/d/17LtsERH696-gTvubwvNzO5tpzsNhUbO6/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(6)">
     <td class="col-num">7</td>
@@ -133,6 +158,7 @@
     <td class="col-venture">ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</td>
     <td class="col-city">באר שבע</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1VNp0HAkiPgfz4wCEB5kECicPhh8Q41vX/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(7)">
     <td class="col-num">8</td>
@@ -140,6 +166,7 @@
     <td class="col-venture">מקל הליכה חכם לאוכלוסיות הגיל השלישי</td>
     <td class="col-city">ג׳ולס</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1hJJYMO4U3Auirqq6ald0CJ7-u5akLaSB/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(8)">
     <td class="col-num">9</td>
@@ -147,6 +174,7 @@
     <td class="col-venture">מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</td>
     <td class="col-city">פתח תקווה</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1qXuGs6pX1m6JT25Bdq62FZWWLdOlEf0G/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(9)">
     <td class="col-num">10</td>
@@ -154,6 +182,7 @@
     <td class="col-venture">רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</td>
     <td class="col-city">ירושלים</td>
     <td class="col-pres"></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(10)">
     <td class="col-num">11</td>
@@ -161,6 +190,7 @@
     <td class="col-venture">פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</td>
     <td class="col-city">ירושלים</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1uPcUsu0Ixj6uDfHFeZEO23EekAHaCA-g0tJ3mw7uXRw/edit?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(11)">
     <td class="col-num">12</td>
@@ -168,6 +198,7 @@
     <td class="col-venture">מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</td>
     <td class="col-city">פתח תקווה</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1WSMtHcGILwv-8CX9-ugrOpwTwMowqORs/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(12)">
     <td class="col-num">13</td>
@@ -175,6 +206,7 @@
     <td class="col-venture">פלטפורמה למציאת עבודה לצעירים</td>
     <td class="col-city">ירושלים</td>
     <td class="col-pres"></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(13)">
     <td class="col-num">14</td>
@@ -182,6 +214,7 @@
     <td class="col-venture">פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</td>
     <td class="col-city">ראשון לציון</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1UHnVBUI4MguGS4X2pREBkmSF7NjPuKtu/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(14)">
     <td class="col-num">15</td>
@@ -189,6 +222,7 @@
     <td class="col-venture">פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</td>
     <td class="col-city">אשדוד</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1Vno_8DIk6oo7qILud_AENdmAwY7mHYNz/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(15)">
     <td class="col-num">16</td>
@@ -196,6 +230,7 @@
     <td class="col-venture">פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</td>
     <td class="col-city">אשדות יעקב</td>
     <td class="col-pres"><a href="https://drive.google.com/file/d/1EVsuMxNxXgVs849nsQRNDJBlF20ZUqYe/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 <tr class="data-row" onclick="showDetail(16)">
     <td class="col-num">17</td>
@@ -203,10 +238,217 @@
     <td class="col-venture">&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</td>
     <td class="col-city">מבוא ביתר / קריית ים</td>
     <td class="col-pres"><a href="https://docs.google.com/presentation/d/1DDr6iP2FXbIxqh_p8TSY_p42OXREiBrO/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+    <td class="col-arrow">&#8592;</td>
 </tr>
 
             </tbody>
         </table>
+<div class="mobile-list">
+    <div class="mobile-item" onclick="showDetail(0)">
+        <div class="mobile-num">1</div>
+        <div class="mobile-content">
+            <div class="mobile-name">עדן בועז מימון</div>
+            <div class="mobile-venture">פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ראשון לציון</span>
+                <a href="https://docs.google.com/presentation/d/1KS7GRey53DOSC8VxRcPdUY4I2kl3qjiY/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(1)">
+        <div class="mobile-num">2</div>
+        <div class="mobile-content">
+            <div class="mobile-name">יצחק ליאור</div>
+            <div class="mobile-venture">פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ירושלים</span>
+                
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(2)">
+        <div class="mobile-num">3</div>
+        <div class="mobile-content">
+            <div class="mobile-name">דניאל בן צור</div>
+            <div class="mobile-venture">פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ירושלים</span>
+                
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(3)">
+        <div class="mobile-num">4</div>
+        <div class="mobile-content">
+            <div class="mobile-name">דוד טגניה</div>
+            <div class="mobile-venture">אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">עפולה</span>
+                
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(4)">
+        <div class="mobile-num">5</div>
+        <div class="mobile-content">
+            <div class="mobile-name">עידו חן</div>
+            <div class="mobile-venture">פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">הוד השרון</span>
+                <a href="https://docs.google.com/presentation/d/1JqC4ENt9mE8eSrXPd0-TUhU-veF1LwI5/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(5)">
+        <div class="mobile-num">6</div>
+        <div class="mobile-content">
+            <div class="mobile-name">רן עוקשי</div>
+            <div class="mobile-venture">אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">נתניה</span>
+                <a href="https://drive.google.com/file/d/17LtsERH696-gTvubwvNzO5tpzsNhUbO6/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(6)">
+        <div class="mobile-num">7</div>
+        <div class="mobile-content">
+            <div class="mobile-name">תומר זילברשטיין</div>
+            <div class="mobile-venture">ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">באר שבע</span>
+                <a href="https://docs.google.com/presentation/d/1VNp0HAkiPgfz4wCEB5kECicPhh8Q41vX/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(7)">
+        <div class="mobile-num">8</div>
+        <div class="mobile-content">
+            <div class="mobile-name">ירין חמדאן</div>
+            <div class="mobile-venture">מקל הליכה חכם לאוכלוסיות הגיל השלישי</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ג׳ולס</span>
+                <a href="https://docs.google.com/presentation/d/1hJJYMO4U3Auirqq6ald0CJ7-u5akLaSB/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(8)">
+        <div class="mobile-num">9</div>
+        <div class="mobile-content">
+            <div class="mobile-name">עידו אורייה יוסף</div>
+            <div class="mobile-venture">מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">פתח תקווה</span>
+                <a href="https://docs.google.com/presentation/d/1qXuGs6pX1m6JT25Bdq62FZWWLdOlEf0G/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(9)">
+        <div class="mobile-num">10</div>
+        <div class="mobile-content">
+            <div class="mobile-name">ליאל דבח ורועי חלמיש</div>
+            <div class="mobile-venture">רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ירושלים</span>
+                
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(10)">
+        <div class="mobile-num">11</div>
+        <div class="mobile-content">
+            <div class="mobile-name">נתנאל כהן</div>
+            <div class="mobile-venture">פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ירושלים</span>
+                <a href="https://docs.google.com/presentation/d/1uPcUsu0Ixj6uDfHFeZEO23EekAHaCA-g0tJ3mw7uXRw/edit?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(11)">
+        <div class="mobile-num">12</div>
+        <div class="mobile-content">
+            <div class="mobile-name">אמיר גבאי-טוטחאזן</div>
+            <div class="mobile-venture">מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">פתח תקווה</span>
+                <a href="https://docs.google.com/presentation/d/1WSMtHcGILwv-8CX9-ugrOpwTwMowqORs/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(12)">
+        <div class="mobile-num">13</div>
+        <div class="mobile-content">
+            <div class="mobile-name">ידידיה רבינוביץ</div>
+            <div class="mobile-venture">פלטפורמה למציאת עבודה לצעירים</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ירושלים</span>
+                
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(13)">
+        <div class="mobile-num">14</div>
+        <div class="mobile-content">
+            <div class="mobile-name">יואב פרידמן</div>
+            <div class="mobile-venture">פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">ראשון לציון</span>
+                <a href="https://docs.google.com/presentation/d/1UHnVBUI4MguGS4X2pREBkmSF7NjPuKtu/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(14)">
+        <div class="mobile-num">15</div>
+        <div class="mobile-content">
+            <div class="mobile-name">עמית בן שטרית</div>
+            <div class="mobile-venture">פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">אשדוד</span>
+                <a href="https://docs.google.com/presentation/d/1Vno_8DIk6oo7qILud_AENdmAwY7mHYNz/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(15)">
+        <div class="mobile-num">16</div>
+        <div class="mobile-content">
+            <div class="mobile-name">אורי גרשוני</div>
+            <div class="mobile-venture">פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">אשדות יעקב</span>
+                <a href="https://drive.google.com/file/d/1EVsuMxNxXgVs849nsQRNDJBlF20ZUqYe/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+    <div class="mobile-item" onclick="showDetail(16)">
+        <div class="mobile-num">17</div>
+        <div class="mobile-content">
+            <div class="mobile-name">מתן לביא וגיא סוקולצקי</div>
+            <div class="mobile-venture">&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</div>
+            <div class="mobile-bottom">
+                <span class="mobile-city">מבוא ביתר / קריית ים</span>
+                <a href="https://docs.google.com/presentation/d/1DDr6iP2FXbIxqh_p8TSY_p42OXREiBrO/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link mobile-pres">מצגת</a>
+            </div>
+        </div>
+        <div class="mobile-arrow">&#8592;</div>
+    </div>
+</div>
     </div>
 
 <div id="detail-0" class="detail-view">
