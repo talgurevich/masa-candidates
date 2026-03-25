@@ -6,1202 +6,514 @@
     <title>אופק טק — יזמי מחזור ב׳</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Heebo', sans-serif;
-            background: #f0f4f8;
-            color: #1e293b;
-            line-height: 1.7;
-        }
-        header {
-            background: linear-gradient(135deg, #1a4a5e 0%, #0f2d3a 100%);
-            color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
-        }
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-        header h1 span {
-            color: #22c55e;
-        }
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.85;
-            font-weight: 300;
-        }
-        .count-badge {
-            display: inline-block;
-            background: #22c55e;
-            color: #0f2d3a;
-            font-weight: 600;
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            margin-top: 0.8rem;
-            font-size: 0.95rem;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-        .card-header {
-            background: #1a4a5e;
-            color: white;
-            padding: 1rem 1.2rem;
-        }
-        .card-header h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .card-body {
-            padding: 1rem 1.2rem;
-            flex: 1;
-        }
-        .venture-title {
-            color: #1a4a5e;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-        .card-city {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 0.6rem;
-        }
-        .card-summary {
-            color: #475569;
-            font-size: 0.88rem;
-            line-height: 1.6;
-        }
-        .card-footer {
-            padding: 0.8rem 1.2rem;
-            border-top: 1px solid #e2e8f0;
-            text-align: left;
-        }
-        .view-more {
-            color: #22c55e;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        /* Detail view */
-        .detail-view {
-            padding-bottom: 2rem;
-        }
-        .back-btn {
-            background: none;
-            border: 2px solid #1a4a5e;
-            color: #1a4a5e;
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            font-family: 'Heebo', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            margin-bottom: 1.5rem;
-            transition: background 0.2s, color 0.2s;
-        }
-        .back-btn:hover {
-            background: #1a4a5e;
-            color: white;
-        }
-        .detail-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-        }
-        .detail-card h2 {
-            font-size: 1.8rem;
-            color: #1a4a5e;
-            margin-bottom: 0.8rem;
-        }
-        .detail-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 1.2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .meta-item {
-            font-size: 0.95rem;
-            color: #475569;
-        }
-        .meta-item strong {
-            color: #1a4a5e;
-        }
-        .detail-venture {
-            margin-bottom: 1.5rem;
-        }
-        .detail-venture h3 {
-            font-size: 1.2rem;
-            color: #1a4a5e;
-            background: #f0fdf4;
-            border-right: 4px solid #22c55e;
-            padding: 0.8rem 1rem;
-            border-radius: 0 8px 8px 0;
-        }
-        .detail-section {
-            margin-bottom: 1.5rem;
-        }
-        .detail-section h4 {
-            font-size: 1.05rem;
-            color: #1a4a5e;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        .detail-section p {
-            color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-        .pres-btn {
-            display: inline-block;
-            background: #22c55e;
-            color: white;
-            text-decoration: none;
-            padding: 0.7rem 1.8rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            margin-top: 1rem;
-            transition: background 0.2s;
-        }
-        .pres-btn:hover {
-            background: #16a34a;
-        }
-        @media (max-width: 640px) {
-            header h1 {
-                font-size: 1.6rem;
-            }
-            header p {
-                font-size: 0.95rem;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .detail-card {
-                padding: 1.2rem;
-            }
-            .detail-card h2 {
-                font-size: 1.4rem;
-            }
-            .detail-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.6; }
+        
+        header { background: linear-gradient(135deg, #1a4a5e 0%, #0f2d3a 100%); color: white; padding: 28px 20px; text-align: center; }
+        header h1 { font-size: 2rem; font-weight: 700; }
+        header h1 span { color: #22c55e; }
+        header p { font-size: 1rem; opacity: 0.8; margin-top: 4px; }
+        .badge { display: inline-block; background: #22c55e; color: #0f2d3a; font-weight: 600; padding: 3px 14px; border-radius: 16px; margin-top: 10px; font-size: 0.9rem; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px 60px; }
+        
+        /* TABLE */
+        .schedule-table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06); }
+        .schedule-table thead th { background: #1a4a5e; color: white; padding: 12px 14px; font-weight: 600; font-size: 0.9rem; text-align: right; }
+        .schedule-table thead th:first-child { text-align: center; width: 40px; }
+        .data-row { cursor: pointer; transition: background 0.15s; }
+        .data-row:hover { background: #f0fdf4; }
+        .data-row td { padding: 11px 14px; border-bottom: 1px solid #e8ecf0; font-size: 0.88rem; vertical-align: middle; }
+        .col-num { text-align: center; font-weight: 700; color: #22c55e; }
+        .col-name { font-weight: 600; white-space: nowrap; color: #1a4a5e; }
+        .col-venture { color: #444; }
+        .col-city { white-space: nowrap; color: #888; font-size: 0.84rem; }
+        .col-pres { text-align: center; white-space: nowrap; }
+        .pres-link { background: #22c55e; color: white; padding: 4px 12px; border-radius: 14px; font-size: 0.78rem; font-weight: 500; text-decoration: none; display: inline-block; }
+        .pres-link:hover { background: #1da851; }
+        
+        /* DETAIL */
+        .detail-view { display: none; }
+        .detail-view.active { display: block; }
+        .main-view.hidden { display: none; }
+        .back-btn { display: inline-flex; align-items: center; gap: 4px; background: #1a4a5e; color: white; border: none; padding: 9px 18px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; margin-bottom: 16px; font-family: inherit; }
+        .back-btn:hover { background: #0f3460; }
+        .detail-card { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .detail-card h2 { font-size: 1.5rem; color: #1a4a5e; margin-bottom: 6px; }
+        .detail-meta { display: flex; gap: 16px; flex-wrap: wrap; color: #666; font-size: 0.9rem; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+        .detail-venture h3 { font-size: 1.1rem; color: #22c55e; margin-bottom: 16px; font-weight: 600; }
+        .detail-section { margin-bottom: 16px; }
+        .detail-section h4 { font-size: 0.95rem; color: #1a4a5e; margin-bottom: 5px; }
+        .detail-section p { font-size: 0.9rem; color: #333; background: #f8f9fa; padding: 12px; border-radius: 6px; border-right: 3px solid #1a4a5e; line-height: 1.7; }
+        .pres-btn { display: inline-block; background: #22c55e; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-top: 12px; }
+        .pres-btn:hover { background: #1da851; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 16px; }
+        .nav-btn { background: #f0f2f5; border: 1px solid #ddd; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.88rem; }
+        .nav-btn:hover { background: #e0e2e5; }
+        .nav-btn:disabled { opacity: 0.4; cursor: default; }
+        
+        /* MOBILE */
+        @media (max-width: 700px) {
+            .container { padding: 10px 8px 40px; }
+            header { padding: 20px 12px; }
+            header h1 { font-size: 1.4rem; }
+            .schedule-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .schedule-table thead th, .data-row td { padding: 8px 10px; font-size: 0.82rem; }
+            .detail-card { padding: 16px; }
+            .detail-card h2 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1><span>אופק טק</span> — יזמי מחזור ב׳</h1>
-        <p>תוכנית האקסלרציה של מסע אל האופק</p>
-        <div class="count-badge">18 יזמים ויזמות</div>
-    </header>
-    <div class="container">
-        <div id="grid-view" class="grid">
-            
-        <div class="card" onclick="showDetail('candidate-0')">
-            <div class="card-header">
-                <h3>עדן בועז מימון</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</div>
-                <div class="card-city">ראשון לציון</div>
-                <p class="card-summary">בתור מתמודד עם קוליטיס הצורך שזיהיתי הוא פער מהותי בין עצם קיומה של מחלה כרונית לבין היכולת של אדם לנהל חיים שלמים סביבה בצורה יציבה</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
 
-        <div class="card" onclick="showDetail('candidate-1')">
-            <div class="card-header">
-                <h3>יצחק ליאור</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</div>
-                <div class="card-city">ירושלים</div>
-                <p class="card-summary">חוסר ידע ובהירות לגבי עולם הפינוי בינוי בפרט והנדלן בכלל</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
+<header>
+    <h1><span>אופק טק</span> — יזמי מחזור ב׳</h1>
+    <p>תוכנית האקסלרטור | מאי — ספטמבר 2026</p>
+    <div class="badge">17 מיזמים</div>
+</header>
 
-        <div class="card" onclick="showDetail('candidate-2')">
-            <div class="card-header">
-                <h3>דניאל בן צור</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</div>
-                <div class="card-city">ירושלים</div>
-                <p class="card-summary">המיזם בא להקל על מיקרו-משפיענים שמנסים לנהל עסק שלם לגמרי לבד</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
+<div class="container">
+    <div class="main-view" id="mainView">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>שם</th>
+                    <th>מיזם</th>
+                    <th>עיר</th>
+                    <th>מצגת</th>
+                </tr>
+            </thead>
+            <tbody>
+<tr class="data-row" onclick="showDetail(0)">
+    <td class="col-num">1</td>
+    <td class="col-name">עדן בועז מימון</td>
+    <td class="col-venture">פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</td>
+    <td class="col-city">ראשון לציון</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1KS7GRey53DOSC8VxRcPdUY4I2kl3qjiY/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(1)">
+    <td class="col-num">2</td>
+    <td class="col-name">יצחק ליאור</td>
+    <td class="col-venture">פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</td>
+    <td class="col-city">ירושלים</td>
+    <td class="col-pres"></td>
+</tr>
+<tr class="data-row" onclick="showDetail(2)">
+    <td class="col-num">3</td>
+    <td class="col-name">דניאל בן צור</td>
+    <td class="col-venture">פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</td>
+    <td class="col-city">ירושלים</td>
+    <td class="col-pres"></td>
+</tr>
+<tr class="data-row" onclick="showDetail(3)">
+    <td class="col-num">4</td>
+    <td class="col-name">דוד טגניה</td>
+    <td class="col-venture">אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</td>
+    <td class="col-city">עפולה</td>
+    <td class="col-pres"></td>
+</tr>
+<tr class="data-row" onclick="showDetail(4)">
+    <td class="col-num">5</td>
+    <td class="col-name">עידו חן</td>
+    <td class="col-venture">פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</td>
+    <td class="col-city">הוד השרון</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1JqC4ENt9mE8eSrXPd0-TUhU-veF1LwI5/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(5)">
+    <td class="col-num">6</td>
+    <td class="col-name">רן עוקשי</td>
+    <td class="col-venture">אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</td>
+    <td class="col-city">נתניה</td>
+    <td class="col-pres"><a href="https://drive.google.com/file/d/17LtsERH696-gTvubwvNzO5tpzsNhUbO6/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(6)">
+    <td class="col-num">7</td>
+    <td class="col-name">תומר זילברשטיין</td>
+    <td class="col-venture">ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</td>
+    <td class="col-city">באר שבע</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1VNp0HAkiPgfz4wCEB5kECicPhh8Q41vX/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(7)">
+    <td class="col-num">8</td>
+    <td class="col-name">ירין חמדאן</td>
+    <td class="col-venture">מקל הליכה חכם לאוכלוסיות הגיל השלישי</td>
+    <td class="col-city">ג׳ולס</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1hJJYMO4U3Auirqq6ald0CJ7-u5akLaSB/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(8)">
+    <td class="col-num">9</td>
+    <td class="col-name">עידו אורייה יוסף</td>
+    <td class="col-venture">מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</td>
+    <td class="col-city">פתח תקווה</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1qXuGs6pX1m6JT25Bdq62FZWWLdOlEf0G/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(9)">
+    <td class="col-num">10</td>
+    <td class="col-name">ליאל דבח ורועי חלמיש</td>
+    <td class="col-venture">רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</td>
+    <td class="col-city">ירושלים</td>
+    <td class="col-pres"></td>
+</tr>
+<tr class="data-row" onclick="showDetail(10)">
+    <td class="col-num">11</td>
+    <td class="col-name">נתנאל כהן</td>
+    <td class="col-venture">פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</td>
+    <td class="col-city">ירושלים</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1uPcUsu0Ixj6uDfHFeZEO23EekAHaCA-g0tJ3mw7uXRw/edit?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(11)">
+    <td class="col-num">12</td>
+    <td class="col-name">אמיר גבאי-טוטחאזן</td>
+    <td class="col-venture">מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</td>
+    <td class="col-city">פתח תקווה</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1WSMtHcGILwv-8CX9-ugrOpwTwMowqORs/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(12)">
+    <td class="col-num">13</td>
+    <td class="col-name">ידידיה רבינוביץ</td>
+    <td class="col-venture">פלטפורמה למציאת עבודה לצעירים</td>
+    <td class="col-city">ירושלים</td>
+    <td class="col-pres"></td>
+</tr>
+<tr class="data-row" onclick="showDetail(13)">
+    <td class="col-num">14</td>
+    <td class="col-name">יואב פרידמן</td>
+    <td class="col-venture">פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</td>
+    <td class="col-city">ראשון לציון</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1UHnVBUI4MguGS4X2pREBkmSF7NjPuKtu/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(14)">
+    <td class="col-num">15</td>
+    <td class="col-name">עמית בן שטרית</td>
+    <td class="col-venture">פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</td>
+    <td class="col-city">אשדוד</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1Vno_8DIk6oo7qILud_AENdmAwY7mHYNz/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(15)">
+    <td class="col-num">16</td>
+    <td class="col-name">אורי גרשוני</td>
+    <td class="col-venture">פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</td>
+    <td class="col-city">אשדות יעקב</td>
+    <td class="col-pres"><a href="https://drive.google.com/file/d/1EVsuMxNxXgVs849nsQRNDJBlF20ZUqYe/view?usp=sharing" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
+<tr class="data-row" onclick="showDetail(16)">
+    <td class="col-num">17</td>
+    <td class="col-name">מתן לביא וגיא סוקולצקי</td>
+    <td class="col-venture">&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</td>
+    <td class="col-city">מבוא ביתר / קריית ים</td>
+    <td class="col-pres"><a href="https://docs.google.com/presentation/d/1DDr6iP2FXbIxqh_p8TSY_p42OXREiBrO/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" onclick="event.stopPropagation()" class="pres-link">צפה במצגת</a></td>
+</tr>
 
-        <div class="card" onclick="showDetail('candidate-3')">
-            <div class="card-header">
-                <h3>דוד טגניה</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</div>
-                <div class="card-city">עפולה</div>
-                <p class="card-summary">זיהיתי שבעולם ה-E-learning: תהליך היצירה של חומרי לימוד אינטראקטיביים הוא איטי</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-4')">
-            <div class="card-header">
-                <h3>עידו חן</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</div>
-                <div class="card-city">הוד השרון</div>
-                <p class="card-summary">הבעיה המרכזית היא הפער הטכנולוגי ההולך וגדל בין עסקים מסורתיים לבין העולם החדש</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-5')">
-            <div class="card-header">
-                <h3>רן עוקשי</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</div>
-                <div class="card-city">נתניה</div>
-                <p class="card-summary">בתקופה שבה המציאות הכלכלית מאוד קשה במיוחד עבור הדור הצעיר של מדינת ישראל</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-6')">
-            <div class="card-header">
-                <h3>תומר זילברשטיין</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</div>
-                <div class="card-city">באר שבע</div>
-                <p class="card-summary">שיפור יכולות טכניות של ספורטאי דרך צפייה בוידאו שלו</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-7')">
-            <div class="card-header">
-                <h3>ירין חמדאן</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">מקל הליכה חכם לאוכלוסיות הגיל השלישי</div>
-                <div class="card-city">ג׳ולס</div>
-                <p class="card-summary">נפילות הן גורם התמותה והנכות מספר אחת בקרב בני הגיל השלישי בישראל ובעולם</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-8')">
-            <div class="card-header">
-                <h3>עידו אורייה יוסף</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</div>
-                <div class="card-city">פתח תקווה</div>
-                <p class="card-summary">חוויתי כאבים בבטן במשך תקופה ארוכה ולא הבנתי למה רופאים לא ידעו לשים את האצבע מה זה</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-9')">
-            <div class="card-header">
-                <h3>ליאל דבח ורועי חלמיש</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</div>
-                <div class="card-city">ירושלים</div>
-                <p class="card-summary">חיבור בין לקוחות קצה לעסקים בתחום הביוטי</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-10')">
-            <div class="card-header">
-                <h3>נתנאל כהן</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</div>
-                <div class="card-city">ירושלים</div>
-                <p class="card-summary">שוק עבור מיזמים יהודיים קטנים
-חיסכון בזמן ובמאמץ
-חיבור הקהילה
-אמינות ובטיחות בקנייה
-נגישות למוצרים יהודיים איכותיים
-חיבור ישיר בין מוחרים ולבין קונ...</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-11')">
-            <div class="card-header">
-                <h3>אמיר גבאי-טוטחאזן</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</div>
-                <div class="card-city">פתח תקווה</div>
-                <p class="card-summary">הבעיה היא דליפת ידע ארגוני</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-12')">
-            <div class="card-header">
-                <h3>ידידיה רבינוביץ</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה למציאת עבודה לצעירים</div>
-                <div class="card-city">ירושלים</div>
-                <p class="card-summary">הבנתי את הצורך במערכת מיון עובדים</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-13')">
-            <div class="card-header">
-                <h3>יואב פרידמן</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</div>
-                <div class="card-city">ראשון לציון</div>
-                <p class="card-summary">הבעיה שזיהיתי היא מוטיבציה נמוכה לעבודה ורצון מאוד גדול בגמישות בעבודה של הדורות הצעירים</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-14')">
-            <div class="card-header">
-                <h3>עמית בן שטרית</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</div>
-                <div class="card-city">אשדוד</div>
-                <p class="card-summary">שחקנים צעירים מעלים קטעים לרשתות חברתיות</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-15')">
-            <div class="card-header">
-                <h3>אורי גרשוני</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</div>
-                <div class="card-city">אשדות יעקב</div>
-                <p class="card-summary">הצורך שזיהיתי הוא שיש הרבה אנשים שרוצים להתנדב ולעזור</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-16')">
-            <div class="card-header">
-                <h3>מתן לביא</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</div>
-                <div class="card-city">מבוא ביתר</div>
-                <p class="card-summary">הבעיה היא שתרגול מתמטי עצמאי בבית הוא כרגע &#x27;עיוור&#x27; למצבו של התלמיד</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        <div class="card" onclick="showDetail('candidate-17')">
-            <div class="card-header">
-                <h3>גיא סוקולצקי</h3>
-            </div>
-            <div class="card-body">
-                <div class="venture-title">—</div>
-                <div class="card-city">קריית ים</div>
-                <p class="card-summary">להרבה צעירים ובעיקר חיילים משוחררים יש יכולות וידע שרכשו במהלך השנים אך אין להם הרבה כסף במידה והם רוצים ללמוד דברים חדשים</p>
-            </div>
-            <div class="card-footer">
-                <span class="view-more">לפרטים נוספים &larr;</span>
-            </div>
-        </div>
-
-        </div>
-        
-        <div id="candidate-0" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-0')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>עדן בועז מימון</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ראשון לציון</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ראשון לציון מחזור נובמבר 24</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>היי אני עדן בועז מימון אני יזם חברתי ששואף להשפיע על החברה לעזור ולפרוץ דרך.<br>אני מתמודד עם קוליטיס כרוני במעי הגס, מחלה שהתגלתה אצלי במצב קשה וכללה תסמינים משמעותיים שפגעו בי משמעותית בתפקוד היומיומי. ההתמודדות היא לא תיאורטית אלא מציאות יומיומית של התמודדות<br><br>למרות זאת, בחרתי להירשם ללימודים אקדמיים ולא לדחות את החיים עד שהמצב יתייצב. האתגר המשמעותי ביותר שאני חווה כרגע הוא בתקופת מבחנים, כאשר חוויתי התקף חריף של המחלה לפניי כשבועיים ששיתק אותי פיזית בדיוק בזמן שבו נדרשתי לתפקד ברמה הגבוהה ביותר.<br><br>באותו רגע עמדתי בפני בחירה לוותר ולהיכנע לנסיבות או לקחת אחריות מלאה על מה שכן בשליטתי. ב&quot;ה בחרתי באחריות. פיתחתי שיטות למידה יצירתיות שמתאימות למצב הרפואי שלי, חילקתי עומסים אחרת, ניהלתי את האנרגיה בצורה מחושבת ובעיקר לא התביישתי לפנות לגורמים הרלוונטיים במוסד הלימודי כדי לבקש התאמות ותמיכה.<br><br>למדתי שיכולת לבקש עזרה היא לא חולשה אלא מנהיגות עצמית. הבנתי שגם תחת מגבלות רפואיות אפשר לייצר תנועה קדימה אם פועלים בצורה מודעת, מתוכננת ועקבית.<br><br>ההתמודדות הזו חידדה אצלי את ההבנה שהאתגר הוא לא רק המחלה עצמה אלא האופן שבו אדם מנהל את חייו סביבה. היום אני מביא את אותה גישה יוזמת ומעשית גם לעשייה היזמית שלי.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>בתור מתמודד עם קוליטיס הצורך שזיהיתי הוא פער מהותי בין עצם קיומה של מחלה כרונית לבין היכולת של אדם לנהל חיים שלמים סביבה בצורה יציבה, מסודרת ותומכת.<br><br>הבעיה איננה רק רפואית אלא מערכתית וחברתית. אדם עם מחלה כרונית אינו מנהל רק תסמינים. הוא מנהל בדיקות, רופאים, תורים, תרופות, תוספים, מסמכים, בירוקרטיה, זכויות, עבודה, לימודים וחיים אישיים במקביל. לעיתים קרובות הוא נדרש להתמודד לבד מול ביטוח לאומי, מערכות בריאות וגורמים מוסדיים, ללא הכוונה ברורה וללא כלים מסודרים.<br><br>מעבר לפיזור המידע ולעומס הידע הסותר, קיימת תחושת חוסר אונים עמוקה. רבים אינם יודעים מה מגיע להם, כיצד לבקש התאמות בלימודים או בעבודה, ואיך לשלב בין בריאות לחיים תפקודיים. הקושי אינו רק פיזי אלא גם רגשי וחברתי. תחושת בדידות, בושה וחוסר שייכות מלוות מתמודדים רבים.<br><br>הקהילות הקיימות לרוב מפוזרות ואינן מספקות תשתית מסודרת וארוכת טווח. בישראל אין כיום פלטפורמה אינטגרטיבית שמאגדת ניהול רפואי, הנגשת זכויות, תוכן מותאם, קהילה ותמיכה מעשית במקום אחד.<br><br>בנוסף קיימת בעיית מודעות ציבורית. מחלות כרוניות ובעיקר מחלות מעי אינן מדוברות בהיקף שתואם את סדר הגודל שלהן. חסר שיח פתוח ומנרמל שמציג את ההתמודדות כחלק מהחיים ולא כמשהו שיש להסתיר. העלאת מודעות דרך פעילות ברשתות החברתיות מאפשרת להגיע לקהלים רחבים, לייצר חשיפה משמעותית וליצור שיתופי פעולה רלוונטיים שיכולים להרחיב את ההשפעה ולהוביל לפרויקטים חברתיים נוספים.<br><br>המיזם מבקש לתת מענה כולל לשלושה מישורים מרכזיים<br>ניהול חכם ומאורגן של כלל ההיבטים הרפואיים והבירוקרטיים<br>יצירת קהילה בטוחה שמפחיתה בדידות ומחזקת תחושת שייכות<br>והובלת שינוי תודעתי רחב יותר סביב התמודדות כרונית<br><br>המטרה היא להפוך מצב של חוסר סדר וחוסר אונים למערכת שמייצרת שליטה, בהירות וחיים תפקודיים ויציבים יותר עבור אלפי מתמודדים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם פותר את הפער שזוהה באמצעות יצירת פלטפורמה טכנולוגית חברתית אינטגרטיבית שמאגדת את כלל היבטי ההתמודדות במקום אחד.<br><br>ברמה הפרקטית, האפליקציה תשמש כמרכז ניהול אישי למתמודד. היא תאפשר סריקה ואיגוד מסמכים רפואיים,(אולי מחוברת למאגרים כדיי שיגיעו אוטומטית לאפליקציה) מעקב אחר תסמינים, בדיקות, תרופות ותוספים, תיעוד מסודר לאורך זמן ונגישות מיידית למידע רלוונטי. בכך היא מפחיתה את הפיזור והעומס ומחזירה שליטה למשתמש.<br><br>ברמה הבירוקרטית והיומיומית, הפלטפורמה תספק הנגשת מידע מסודר על זכויות, תהליכים מול גופים כמו ביטוח לאומי, אפשרויות התאמה בלימודים ובעבודה וכלים מעשיים להתנהלות נכונה. המטרה היא להפוך מידע מפוזר ולא ברור למערכת ברורה וישימה. בנוסף לכך היא תיהיה מחוברת לגופים וגורמים רלוונטים כמו מרפאות אנשיי מקצוע רופאים ויהיה בוט שיהיה ייעודי לענות על כל צורך שמתמודד צריך לדעת  על כל שאלה.<br><br>ברמה הקהילתית, תוקם קהילה דיגיטלית בטוחה ומבוקרת בתוך האפליקציה, שתאפשר שיח, שיתוף וחיבור בין מתמודדים בצורה מסודרת וארוכת טווח. הקהילה הקיימת כיום בוואטסאפ תהווה בסיס למעבר לפלטפורמה מקצועית יותר עם מנגנוני בקרה, חלוקה לפי תחומי עניין וסוגי התמודדות, ותשתית טכנולוגית שתאפשר תמיכה מתמשכת ולא אקראית.<br><br>בנוסף לשיח הקהילתי, הפלטפורמה תציע מסלולי ליווי מגוונים בהתאמה אישית. ליוויים דיגיטליים, קורסים מוקלטים ותוכניות עומק, לצד ליווי אישי או קבוצתי בהתאם לצורך של כל משתמש. כל מתמודד יוכל לבחור את רמת המעורבות והתמיכה שמתאימה לו, החל מתוכן פתוח ועד מסלול מובנה ומונחה.<br><br>מעבר למרחב הדיגיטלי, הקהילה תתרחב גם לפעילות פיזית. מפגשי חיזוק, הרצאות, ערבים ייעודיים, סדנאות ואירועים קהילתיים שייצרו תחושת אחווה אמיתית וחיבור אנושי. השילוב בין דיגיטל לפיזי נועד להפוך את הקהילה ממקום של שיתוף בלבד למרחב חי, פעיל ותומך.<br>ברמה התודעתית, פעילות סושיאל עקבית ומקצועית תמשיך להעלות מודעות, להנגיש את השיח ולהגיע לאנשים שאינם מודעים לאפשרויות התמיכה הקיימות. התוכן ישלב בין רצינות, ידע ונגישות, וייצר תנועה רחבה סביב הנושא ויכולת ליצור פרוקטים חדשים שם ולהתפתח למקומות נוספים.<br><br>בעתיד, שילוב טכנולוגיות מתקדמות יאפשר התאמה אישית חכמה על בסיס נתוני המשתמש, זיהוי דפוסים ומתן תובנות מותאמות, ובכך להפוך את הפלטפורמה לכלי פרואקטיבי ולא רק ריאקטיבי.<br><br>המיזם אינו מציע פתרון נקודתי אלא מערכת כוללת שמחברת בין ניהול רפואי, בירוקרטי, חברתי ותודעתי ובכך מחסה את כל הנקודות שהמשתמש צריך.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>ההיבט הטכנולוגי במיזם מתבטא ביצירת פלטפורמה דיגיטלית אינטגרטיבית שמרכזת, מארגנת ומנתחת את כלל נתוני ההתמודדות של המשתמש במקום אחד.<br><br>האפליקציה תאפשר סריקה חכמה של מסמכים רפואיים, איחוד נתונים ממקורות שונים ויצירת תיק רפואי דיגיטלי מסודר ונגיש. מעבר לאחסון מידע, המערכת תאפשר מעקב אחר תסמינים, בדיקות, תרופות ותוספים לאורך זמן, ובכך תייצר בסיס נתונים אישי שיאפשר זיהוי דפוסים ותובנות מותאמות.<br><br>הפלטפורמה תשלב מנגנוני התאמה אישית מבוססי נתונים שיאפשרו למשתמש לקבל תוכן, כלים והכוונה רלוונטיים לפי סוג המחלה, שלב ההתמודדות והצרכים האישיים שלו. בשלב מתקדם יותר, ניתן יהיה לשלב רכיבי בינה מלאכותית לזיהוי מגמות, התרעות מוקדמות והצעת פעולות פרואקטיביות.<br><br>בנוסף, המערכת תכלול תשתית דיגיטלית לקהילה מבוקרת, לליוויים אישיים וקבוצתיים, לקורסים מקוונים ולאירועים. כל אלו יתנהלו בתוך סביבת משתמש אחת מאובטחת ומסודרת.<br><br>פעילות הסושיאל מהווה שכבת הפצה דיגיטלית משלימה. הרשתות החברתיות ישמשו להנגשת ידע, יצירת מעורבות והבאת משתמשים לפלטפורמה, תוך בניית אמון ושיח פתוח סביב מחלות כרוניות. בכך נוצר חיבור בין תוכן דיגיטלי רחב לבין מערכת טכנולוגית עמוקה ומבוססת נתונים.<br><br>החדשנות במיזם היא בחיבור בין ניהול רפואי, ניתוח נתונים, קהילה וליווי בתוך תשתית דיגיטלית אחת, עם פוטנציאל סקייל והשפעה רחבה.</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1KS7GRey53DOSC8VxRcPdUY4I2kl3qjiY/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-1" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-1')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>יצחק ליאור</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ירושלים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ירושלים , מחזור 3</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אוהב אתגרים וספורט, ניסיון באבטחת שגרירויות ישראל ברחבי העולם, מדריך צלילה חופשית , סיימתי לפני כחודש שיקום ברך לאחר ניתוח שארך שנה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>חוסר ידע ובהירות לגבי עולם הפינוי בינוי בפרט והנדלן בכלל. <br>אדם פשוט לא יכול לדעת או יתקשה מאוד חדעת לבדו מה זכויות הבניה וההשפעה שלהן על שווי הנכס שלו.<br>זה מקשה על בעלי נכסים במכירה, בעלים בהתארגנות לפרויקט פינוי-בינוי ויזמים בבדיקת זכויות, ומחייב פניה לאנשי מקצוע - אדריכלים, שמאים ועורכי דין ותשלום סכומים משמעותיים עבור הבדיקה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>ריכוז המידע , השלבים, החוקים בפלטפורמה דיגיטלית שתוכל להגיע לכל יד ובכל שפה נדרשת , באמצעות המיזם ניתן יהיה לערוך בדיקת זכויות ותחשיב כלכלי באמצעות כלי AI מתקדמים, ולהציג ללקוח מידע נגיש ומעובד.  <br>לצורך הדוגמא <br>בדיקת זכויות והערכת שמאי לנכס עולות לאדם פרטי כ-10,000 שח.<br>אוטומטיזציה של התהליך תוכל להציע תחליף זול ומהיר יותר ולתת ערך אמיתי במחיר זול משמעותית.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>דיגיטליזציה של חומרים ומידע רב וריכוזם במקום אחד בו קל לחפש ולמצוא את הנדרש, בכל שפה וזמן רצויים והחלפת עבודת ניתוח והערכת שווי זכויות שנעשית על ידי אנשי מקצוע, באמצעותי כלי AI מתקדמים ובכך לחסוך עלויות גבוהות .</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
-        <div id="candidate-2" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-2')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>דניאל בן צור</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ירושלים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ירושלים</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>בתקופת התיכון הצבתי לעצמי כטרה להגיע לTOP 3 באירופה בענף ספורט שעסקתי בו באותה תקופה.<br>קבעתי לעצמי את המטרה הזו וקפצתי למים. לקח לי שלוש שנים עם הרבה זמן ומאמץ שהושקע, מספר אכזבות משמעותיות והפקת לקחים- והשגתי את המטרה שהצבתי לעצמי.<br><br>בשירות הצבאי שלי הייתי האדם שמוביל פרוקייטים חשובים ובוחרים לתת לו את המשימות שרצו שיתבצעו ברמה גבוהה מאד. <br><br>מכל החוויות בשירות וגם בתיכון יצאתי עם תחושה שעם הרבה מאמץ וחוסן נפשי לעמוד באכזבות לאורך הדרך- אצליח לכבוש כל מטרה שאציב לעצמי.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>המיזם בא להקל על מיקרו-משפיענים שמנסים לנהל עסק שלם לגמרי לבד. היום שוק העסקאות הישירות מול מותגים קטנים-בינוניים מתנהל בבאלגן: בלי חוזים, בלי סדר ובלי גב של סוכן. המיזם מביא למשפיענים הקטנים את מה שהיה עד היום רק לגדולים- &#x27;סוכן&#x27; דיגיטלי שעושה עבורם את כל העבודה השחורה. הפתרון הזה נותן להם את השקט הנפשי להתעסק נטו ביצירת תוכן, במקום בניהול בירוקרטי של העסק.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם מעניק למשפיען לינק ל-BIO המרכז ומסנן את הפניות למשפך עבודה מסודר, מייצר חוזה וסוגר עסקה בקליק אחד של המשפיען. כדי להסיר את נטל הבירוקרטיה, המיזם פועל כצינור סליקה שדואג אוטומטית לקבלות ולתשלומי המס מול המותג. לצד הניהול הפיננסי, המערכת מציעה סל כלים מקיף לניהול השוטף: יומן משימות, דירוג הוגנות ומוסר תשלומי מותגים, ויצירת דף נחיתה מקצועי המציג את נתוני המשפיען.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>הטכנולוגיה המרכזית של המיזם היא פלטפורמת SaaS המייצרת תהליך עבודה אוטומטי מקצה לקצה. מרגע ההרשמה והגדרת ההעדפות והתמחור, המערכת מסננת פניות בזמן אמת, מרכיבה חוזים משפטיים ושולחת התראה למשפיען. עם אישורו, נשלחת אוטומטית דרישת סליקה למותג. המעטפת הטכנולוגית כוללת בנוסף הרכבה אוטומטית של מדיה קיט דינמי המתעדכן בזמן אמת, סוכן AI לניהול משא ומתן (עבור מנויים), ומנוע חיפוש פנימי חכם המאפשר למותגים לאתר בקלות משפיענים המיוצגים בפלטפורמה.</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
-        <div id="candidate-3" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-3')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>דוד טגניה</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> עפולה</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> עפולה מחזור 2025</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני בן 26, הנדסאי חשמל והקמתי עסק אינטרנטי.<br>העסק האינטרנטי הינו אתר אינטראקטיבי ללמוד השפה האמהרית וחיזוק הקשר הבין דורי.<br>האתר מלמד בצורה של קרוסים, שיעורים עם משחקים דיגיטליים (שיצרתי) ושאלוני מעבר. בצורה כיפית וחווייתית. <br>ולמדתי המון בתהליך מבחינת התפתחותית, עסקית והוראתית.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>זיהיתי שבעולם ה-E-learning: תהליך היצירה של חומרי לימוד אינטראקטיביים הוא איטי, יקר ומלא באתגרים טכניים. כיום, רוב הקורסים בשוק מסתפקים בפורמטים סטטיים (וידאו ו-PDF) כי יצירת משחקים או פעילויות מותאמות אישית דורשת זמן פיתוח ארוך ומשאבים רבים. המיזם שלי פותר את חוסר היעילות הזה ומאפשר לייצר תוכן עשיר ומערב (Engaging) במינימום זמן ומאמץ.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>אוטומציית AI: המערכת מנתחת חומרי לימוד גולמיים והופכת אותם מיידית למשחקים אינטראקטיביים המותאמים אישית לכל שיעור.<br><br>נגישות טכנולוגית: יצירת חוויות למידה עשירות בלחיצת כפתור, ללא צורך בידע בתכנות, בעיצוב או במשאבי פיתוח יקרים.<br><br>יעילות מקסימלית: קיצור זמני העבודה , מה שהופך תהליך שהיה איטי ומסורבל למהיר, זול ופשוט ליישום עבור כל מרצה.<br><br>שיפור הלמידה: הפיכת הלומד מפסיבי לאקטיבי באמצעות גיימיפיקציה, מה שמעלה משמעותית את אחוזי ההתמדה והצלחת הקורס.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>הליבה הטכנולוגית של המיזם מבוססת על אוטומציית AI (בינה מלאכותית). המערכת יודעת לנתח חומרי לימוד גולמיים ולהמיר אותם באופן אוטומטי למשחקים לימודיים אינטראקטיביים המותאמים ספציפית לתוכן של כל שיעור. הטכנולוגיה מקצרת משמעותית את זמני הפיתוח ומנגישה יכולות של &#x27;גיימיפיקציה&#x27; מתקדמת לכל מרצה או מוסד לימודי, ללא צורך בידע בתכנות או בעיצוב.</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
-        <div id="candidate-4" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-4')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>עידו חן</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> הוד השרון</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> נתניה, נובמבר 25</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני עידו חן, בן 21 גר בהוד השרון<br>בן לאלי ונועה,<br>ספורטאי בתחום מרוצי אופנועים,<br>אלוף ישראל בקטגוריית ה600 סמ&quot;ק ומתחרה בינלאומי בתחרויות.<br>בצבא שיררתי כספורטאי מצטיין בחיל הים, והתעסקתי במשך השירות שלי בתהליכי רכש אמל&quot;ח בשייטת 13.<br><br>הקשר שלי לעולם הטכנולוגי מתחיל מגיל צעיר, גדלתי עם האייפון הראשון בכיס וכבר בגילאי יסודי הייתי בונה ופורץ משחקים למחשב בבית.<br>לימדתי את עצמי לכתוב קוד בגיל 16, שולט בפייתון ובעבר נגעתי מעט בשפות שונות,<br>התעסקתי בבניית פרוקטים אישיים, כתבתי משחקים לטלפון האישי ובניתי סרברים לי ולחברים שלי<br><br>השתחררתי מהצבא לפניי כ4 חודשים, היום מתעסק בעיקר בניהול הפאן הטכנולוגי והשיווקי בעסק של אבי<br>עסק לימוד נהיגה לאופנועים, <br>אני מנהל את כל נושא - הסושיאל, תוכן ממומן, פרסום ושיווק, בניית האתרים, בניית אוטומצייות וכתיבת פרויקטיים פנים שמייעלים תהליכים, מכירות, CRM.<br><br>לאחרונה בעיקר פוגש אותי כאתגר כל נושא המכירות, תחום מאוד מאוד קריטי כיזם, ובנוסף גם מאוד מאתגר,<br>אני מתפקס ביום יום בעיקר באיך להשתפר בנושא הזה וחושב איך אני יכול לייעל תהליכים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הבעיה המרכזית היא הפער הטכנולוגי ההולך וגדל בין עסקים מסורתיים לבין העולם החדש.<br>בעלי עסקים קטנים רבים מתקשים לאמץ כלי התייעלות, אוטומציה וAI, מה שמשאיר אותם בעמדת נחיתות משמעותית מול מתחרים שכבר עשו את הקפיצה הזו. <br>המיזם בא לפתור את חוסר הנגישות הזה ולמנוע מהם להישאר מאחור</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם שלי בא לפתור את הכאב ראש הטכנולוגי של עסקים קטנים.<br>הפתרון בא לשלב נכסים דיגיטליים כמו אתרים ותוכנים בעזרת AI, מערכת שיווק ופרסום שתהיה קלה ופשוטה להבנה לאנשים לא טכנולוגיים,<br>וCRM מינימליסטי ומדויק שלא מציף את הלקוח במידע שלא רלוונטי לעסקים קטנים.<br>המטרה היא להחליף את המערכות הקיימות, שהן לרוב יקרות ומסובכות מדי לתפעול, בכלי אחד פשוט וקל להבנה</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>הליבה הטכנולוגית היא שילוב של מנועי AI ואוטומציה, שיהיו עטופים בפלטפורמת Web/Mobile שתשים פוקס על פשטות.<br>המערכת לוקחת יכולות טכנולוגיות מורכבות כמו אופטימיזציה של קמפיינים וניתוח שיחות מכירה ומבצעת אותן אוטומטית ברקע, כך שהמשתמש נהנה מהתוצאה הטכנולוגית בלי להתעסק יותר מידי ב&#x27;איך&#x27; זה עובד</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1JqC4ENt9mE8eSrXPd0-TUhU-veF1LwI5/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-5" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-5')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>רן עוקשי</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> נתניה</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> נתניה מחזור 38</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>שלום לכולם, אני רן עוקשי בן 25 מנתניה, בוגר תכנית מסע אל האופק, כיום עובד כאיש מכירות בחברת קימאמה. אז קצת עליי, נולדתי וגדלתי בנתניה כל חיי, למדתי בתיכון טשרניחובסקי במגמות תיאטרון, כלכלה ומדעי המדינה. התגייסתי לשירות קרבי בתור לוחם בחטיבת גבעתי, לאחר שנה ירדתי מלוחמה עקב מורכבות נפשית שהבנתי שהתפקיד גדול עליי. אחרי הצבא עבדתי בכל מיני מקומות, הייתי טכנאי בחברת מגלקום שעוסקת בתשתיות תקשורת, עבדתי במוקד המכירות של חברת פספורטקארד ולאחר מכן בודק בטחוני בנמל התעופה בן גוריון. במהלך תקופת העבודה שלי בנתב&quot;ג, התבשרנו שאחיינית שלי (ילדה בת 7 אז) אובחנה כחולה בלוקמיה- סרטן הדם. את האתגר והתקופה הזו לא אשכח בחיי, ואני שמח על התקופה הזו כי היא לימדה אותי כל כך הרבה ושינתה לי את החיים. למדתי איך אפשר לתת קצת מקום לעצב ולפחד והרבה מקום לשמחה וחיוביות. הכרתי את כל עולם המניפסטינג ומחשבה יוצרת מציאות, איך לשנות פרספקטיבה בחיים ולמצוא את הטוב בכל דבר &quot;רע&quot; שקורה בחיינו ולהיאחז בו, כי זו המוטיבציה הכי טובה להמשיך ולעשות את מה שנועדנו אליו. בזכות התקופה הזו עשיתי איזה שהוא שינוי מחשבתי שעוזר לי בכל פעם מחדש כשאני נתקל באתגר או משבר קטן בחיי. כיום היא בריאה ואנחנו אחרי כל התקופה הזו, מצטער אם השארתי במתח   ;)</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>בתקופה שבה המציאות הכלכלית מאוד קשה במיוחד עבור הדור הצעיר של מדינת ישראל, וחסכון לדירה נראה לא אפשרי בלי עזרה מהבית, זיהיתי את הצורך שלכל אדם יהיה חבר כלכלי, אחד כזה כמו הצ&#x27;אט ג&#x27;יפיטי שיש לכולנו כמעט, רק שהייעוד של החבר זה הוא ללמד אותנו להתנהל חכם עם הכסף שלנו, ללמד אותנו כיצד לחסוך, איך להתמודד עם בלת&quot;מ כלכלי שהפתיע אותך, איך בכלל להגדיר מטרה כלכלית שאתה רוצה לחסוך אליה, בין אם זה טיסה לחו&quot;ל עם חברים, רכב או אפילו דירה. כל דבר שרק עולה לנו לראש.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם שלי הולך לפתור את הבעיה בכך שהוא הולך להפוך להיות החבר הכלכלי שלנו, הוא יישלח לנו הודעות כל יום, הוא לא יהיה חופר, הוא יהיה חברותי, ייתן לנו טיפים, יעודד אותנו כשאנחנו מתקדמים ויעזור לנו לקום בנפילות, ואולי הכי חשוב, יעזור לנו לפתח התמדה והגדרת מטרות, שניים מהדברים החשובים ביותר עבור כל אדם שרוצה להצליח, ומי מאיתנו לא רוצה ? החבר הזה יהיה אפליקציה של התנהלות כלכלית- פיננסית, אחת כזו שאתה מזין את כל המצב שלך *היום* ומה עושים הלאה. לא מסתכלים אחורה, לא בוכים על העבר, אלא להסתכל קדימה ולצאת לדרך. אל האפליקציה יכולים להרשם סוכנים פנסיונים ומלווים כלכליים או כל אדם בר-סמכא בתחום ההתנהלות הכלכלית, הם ייתנו טיפים שיוכלו לעזור לאנשים להתקדם ולגדול, ובו זמנית משתמשי האפליקציה יחליטו שהם רוצים ללכת לתהליך ליווי או תכנון פנסיוני אצל אותם יועצים\סוכנים\מלווים.<br>במהלך 3 חודשי שימוש החבר לומד אותך כאדם, כמה אתה מבזבז ועל מה, באילו שעות וימים אתה מבזבז יותר מבזבז פחות, ואחרי שהחבר למד את הדפוס הראשוני של ההתנהלות הכלכלית שלך, הוא יידע איך לייעל אותך ולהביא אותך לאן שאתה רוצה להגיע. הלמידה לא נגמרת אחרי 3 חודשים אבל, החבר ימשיך ללמוד אותך ויעזור לך לאורך כל הדרך. החבר יקטלג הוצאות, על מה אתה מוציא וכמה, תהיה אופציה לכאלו המתנהלים עם מזומן, משהו שהיום קשה לעקוב אחריו בניגוד לכרטיסי אשראי שיש דפי פירוט מסודרים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>אפליקציה משולבת AI שמזהה חיוב באפל או גוגל פיי וישר מקפיצה התראה עבורך שאתה יכול להזין שם לטובת ההוצאה שעכשיו ביצעת.</p>
-                </div>
-                
-                <a href="https://drive.google.com/file/d/17LtsERH696-gTvubwvNzO5tpzsNhUbO6/view?usp=sharing" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-6" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-6')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>תומר זילברשטיין</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> באר שבע</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> באר שבע מחזור 1</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני סטודנט למדעי המחשב באוניברסיטה הפתוחה , יש לי פרויקט קוד ענק שאני עובד עליו ואני צריך ללמוד בשבילו הרבה ,אני מתקשה לנהל את הזמנים שלי כמו שצריך,יש לי הרבה דברים שאני רוצה לעשות להספיק וללמוד</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>שיפור יכולות טכניות של ספורטאי דרך צפייה בוידאו שלו</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>קוד ומתמטיקה</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>קוד</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1VNp0HAkiPgfz4wCEB5kECicPhh8Q41vX/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-7" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-7')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>ירין חמדאן</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ג׳ולס</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ג&#x27;ולס</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>מקל הליכה חכם לאוכלוסיות הגיל השלישי</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני סטודנטית להנדסת חשמל ואלקטרוניקה, בעלת תשוקה ללמידה מתמדת ולפיתוח טכנולוגי. אני שואפת להשתלב בפרויקטים מאתגרים המשלבים חומרה ותוכנה.<br>במסגרת השאיפה שלי להתפתחות מקצועית, השתתפתי בהאקתון טכנולוגי הממוקד בפתרונות לגיל השלישי. במהלך האירוע פיתחנו (יחד עם צוות) פרויקט Multi-disciplinary המשלב אינטגרציה בין חומרה לתוכנה, וזכינו במקום השני. הפרויקט דרש יכולת למידה עצמית מהירה, עבודה תחת לחץ ופתרון בעיות הנדסיות מורכבות.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>נפילות הן גורם התמותה והנכות מספר אחת בקרב בני הגיל השלישי בישראל ובעולם. הבעיה הכפולה היא שמצד אחד הקשיש לא תמיד מרגיש שהוא בסיכון לפני הנפילה, ומצד שני המשפחה לא יודעת מה קורה עד שכבר מאוחר מדי. הפתרונות הקיימים יקרים, מסורבלים, ומצריכים שהקשיש יזכור &quot;להפעיל&quot; אותם – מה שלא קורה במציאות.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>הוא תוספת חכמה שמתחברת לכל מקל הליכה או הליכון קיים. החיישנים בתוכו מזהים חוסר יציבות בהליכה לפני שמתרחשת נפילה, ובמקביל מודדים דופק וסטורציה בכל אחיזה רגילה ולוקחת צילומים. כל הנתונים כמו צילומים ומיקום ועוד מועברים דרך Bluetooth לאפליקציה שמתריאה למשפחה בזמן אמת. הקשיש לא צריך לעשות כלום שונה – הטכנולוגיה עובדת בשקט ברקע.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>המוצר מבוסס על חיישן תאוצה וג&#x27;ירוסקופ לניתוח דפוסי הליכה וזיהוי חוסר יציבות, חיישן דופק וסטורציה בידית, ורכיב BLE לתקשורת עם הסמארטפון. האפליקציה מעבדת את הנתונים ומייצרת התראות חכמות למשפחה. הכל מבוסס על רכיבי מדף נגישים, וניתן לבנות אב טיפוס עובד ללא מעבדה מתקדמת.</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1hJJYMO4U3Auirqq6ald0CJ7-u5akLaSB/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-8" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-8')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>עידו אורייה יוסף</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> פתח תקווה</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> פתח תקווה מחזור 46</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>עידו אורייה בן 24 לומד כרגע את תחום הטיפול והנמרולוגיה מאוד מאמין בעולם הרוחני והתפתחות רוחנית ורוצה להנגיש את זה לציבור הרחב בדרך קלה יותר</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>חוויתי כאבים בבטן במשך תקופה ארוכה ולא הבנתי למה רופאים לא ידעו לשים את האצבע מה זה , הלכתי לטיפול עם סאונד הילינג באמצעות קערות טיבטיות וגיליתי שצאקרת הבסיס לא מאוזנת וכאבי הבטן נעלמו כלא היו</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>הבעיה פה שצריך ללכת למטפל שיודע איך לטפל עם קערות טיבטיות ואני רוצה להנגיש שכול אחד שחווה חוסר איזון יוכל להשתמש בהתאם לצורך</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>בעצם בגוף האדם בעולם הרוחני יש 7 צאקרות,כול צאקרה מתארת היבט אחר במסורת הסינית ידעו מימי קדם איך לטפל בנושא חלק גדול מזה היה קערות טיבטיות ובמילים יותר פשוטות טיפול בצלילים שנקרא גם תדרי סולפג&#x27;יו , גוף האדם מורכב מ70% מים וכול סאונד מייצר וויברציה שמשנה את המים בגוף כול צאקרה מיוחסת לתדר שונה למשל צאקרת הבסיס 396HZ אני רוצה לייצר מוצר שכרגע אין אותו בעולם למיטב ידעתי שבעצם יהיה סוג של כפתור או מכשיר חשמלי שיתמגנט לגוף באותו אזור ויוכל לייצר ויברציה של אותו הסאונד , במקביל לייצר אפליקציה שנותנת ביופידבק על אותו אזור.</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1qXuGs6pX1m6JT25Bdq62FZWWLdOlEf0G/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-9" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-9')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>ליאל דבח ורועי חלמיש</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ירושלים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ירושלים לפני 2 מחזורים</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>בן 25 עצמאי בתחום האיטומים וחבל חדש בירושלים</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>חיבור בין לקוחות קצה לעסקים בתחום הביוטי</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>רשת חברתית עם ביקורות מיקום ותוכן של בעלי העסקים</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>אתר/ אפליקציה</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
-        <div id="candidate-10" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-10')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>נתנאל כהן</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ירושלים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> חורף 2024 ירושלים</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני בוגר הנדסת חשמל ממכון לב וכיום עובד בעיריית תל-אביב בתור מנהל פרוייקטים . אחד הדברים שאני הכי נהנה בהם הוא שהקמתי אתר של ניהול חניות אינטרנטיות לספרי קודש, שמציעה ספרי קודשבמגוון שפות . החניות לא רק מספקת מגוון רחב של ספרים אלא גם מעניקה ערך חינוכי ללקוחות, עם אפשרויות חיפוש נוחות, תכנים על פרשת השבוע וענייני דיומא. המיזם הזה אפשר לי לשלב בין יזמות דיגיטלית לבין אהבה לעולם העסק, ולראות תוצאות ממשיות של העבודה שלי.באתר שלי כל אחד יכול להעלות ספרי קודש ויודאיק להציע למכירה</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>שוק עבור מיזמים יהודיים קטנים<br>חיסכון בזמן ובמאמץ<br>חיבור הקהילה<br>אמינות ובטיחות בקנייה<br>נגישות למוצרים יהודיים איכותיים<br>חיבור ישיר בין מוחרים ולבין קונים<br>קהל יעודי מאוד פציפי <br>יצירת מקומות עבודה עצמאיים</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם שלי מספק פלטפורמה מקוונת מרכזית שניתן למכור ואו לקנות של מוצרים/קורסים/מקצועות של יהודות</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>אני רוצהלפתח פלטפורמה יחודי שבה כל אחד יכול למכור ואו לקנות מוצרי יהדות בשונה מפלטפורמות קיימות שיש שם כל הקטגוריות חוץ ממוצרי יהדות ויש תנאים מאוד מגבילים למוכרים</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1uPcUsu0Ixj6uDfHFeZEO23EekAHaCA-g0tJ3mw7uXRw/edit?usp=sharing" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-11" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-11')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>אמיר גבאי-טוטחאזן</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> פתח תקווה</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> פתח תקווה נובמבר 2025</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני אמיר בן 21 נולדתי וגדלתי בפתח תקווה אני בן אדם מאוד סקרן ושואף לקחת את הצעד הבא בעולם הטכנולוגי שתמיד הרגשתי חלק ממנו. הייתי משחק&#x27; במחשב מגיל צעיר והייתי תמיד &quot;הטכנאי של הבית&quot;. בצבא שירתתי בתור מנהל רשת, ובהמשך השירות שלי התקדמתי להיות ראש צוות. השתחררתי ביוני 2025 ומאוקטובר אני עובד בחברת מגדל בתור טכנאי pc ורשתות. אתגר שחוויתי לאחרונה זה פריקת כתף  שהגבילה אותי ביד אחת ומגבילה הרבה מהתחביבים שלי כולל העבודה, אבל אני חוזר לפעולה ונעזר בכלים כמו text to speach ליעול במקום הקלדה .</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הבעיה היא דליפת ידע ארגוני. בארגונים תפעוליים, הידע הקריטי נמצא בראש של העובדים ולא מתועד.<br>1. בזבוז זמן: חברות מפסידות מיליארדים על Downtime  של מכונות ושרתים בזמן שטכנאים מחפשים פתרונות שכבר קיימים בארגון.<br>2. תיעוד מיושן: עובדי שטח לא מסוגלים או רוצים לשבת לכתוב מסמכים טכניים. כתוצאה מכך, אין זיכרון ארגוני.<br>3. כל עובד משתמש בai שלו ומפצח בעיות איתו, הבעיה שזה נשאר אצלו. אם היה ai שיתופי לפתרון בעיות ולרכז הכל ל&quot;מוח אחד&quot;. ככה שבעזרת מנוע חיפןש אפשר למצוא בקלות תקלות שכבר מישהו התייעץ לגביהן עם בינה מלאכותית ולדעת מי התעסק במה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם פותר את הבעיה על ידי יצירת &quot;מוח ארגוני שיתופי&quot; המבוסס על תיעוד אקטיבי ללא מאמץ; במקום שהעובד ימלא טפסים, הוא מתייעץ עם סוכן AI ארגוני ייעודי שמסייע לו לפצח את התקלה בזמן אמת, כאשר כל תהליך הפיצוח – כולל הודעות קוליות, תמונות מהשטח והצעות הפתרון – נשמר באופן אוטומטי כ&quot;נכס ידע&quot; קהילתי. המערכת הופכת את השיח הזה למדריכים קצרים וברורים (Step-by-Step) המונגשים לכלל העובדים באמצעות מנוע חיפוש סמנטי חכם או סריקת קוד QR על גבי המכונות, כך שבפעם הבאה שמישהו ייתקל באותה בעיה, הוא לא יצטרך להתחיל מאפס אלא יקבל מיד את הדרך שבה העובד הקודם פתר זאת בעזרת ה-AI. בדרך זו, התוכנה מבטלת את &quot;איי המידע&quot; האישיים, חוסכת זמן עבודה יקר, ויוצרת רצף של מומחיות ארגונית שרק הולכת ומשתפרת עם כל תקלה שנפתרת, תוך שהיא הופכת את התיעוד מחובה מעיקה לתוצר לוואי טבעי של העבודה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>Speech-to-Expert Text , RAG , Semantic Search &amp; Vector DB, ויכולת זיהוי ויזואלית של מכשור וקודים (QR) המאפשרת להקפיץ את הידע הרלוונטי למסך העובד ברגע שהוא מכוון את מצלמת הטלפון לעבר התקלה</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1WSMtHcGILwv-8CX9-ugrOpwTwMowqORs/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-12" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-12')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>ידידיה רבינוביץ</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ירושלים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ירושלים, במחזור שהסתיים עכשיו.</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה למציאת עבודה לצעירים</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>ידידיה רבינוביץ, בן 22 מירושלים.<br>אוהב מספרים, מערכות ותהליכים. כיוון חשיבה מאוד אנליטי, אבל כתחביב אני גם מאוד אוהב ללמוד על תרבויות שונות עכשיוויות והיסטוריות, וכן לטייל בטבע ובעיר.<br>סיימתי שירות צבאי מלא, שכלל שירות ביחידת היועץ הכספי לרמטכ&quot;ל בה קיבלתי הצטיינות תא&quot;ל, שירות כספורטאי מצטיין בבייסבול שהתחרה בנבחרת ישראל הצעירה בחו&quot;ל, ובהמשך כלוחם ומפקד בסיירת חטיבתית &quot;סיירת חרוב&quot;.<br>בוגר תואר ראשון בכלכלה מהאו&quot;פ בהצטיינות יתרה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הבנתי את הצורך במערכת מיון עובדים.<br>אם תרצו במשפט- headhunting for the entry level, not just the C suite.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם הינו שילוב היברידי בין אינטרטקציות בעולם האמיתי לבין טכנולוגיה וחוכמת המונים.<br>על ידי שימוש בסוכני שירות מצד אחד, ובאלגוריתמים ונצונים מצד שני- נוכל להתאים בין עובדים טובים לבין עסקים שמוכנים לשלם על כך.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>המערכת אינה Pure Tech. היא מתבססת על אינטראקציות אמיתיות בעולם האמיתי. הטכנולוגיה מצידה הופכת מידע באוויר לנתונים והמלצות שעל ידם ניתן להביא לתשואה עסקית.<br>אם תרצו, אנחנו מביאים טכנולוגיה לעולם ה&#x27;פה לאוזן&#x27;.</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
-        <div id="candidate-13" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-13')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>יואב פרידמן</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> ראשון לציון</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ראשון לציון - מחזור נובמבר 2025</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>גיל 24, רקע במחשוב ולימודים טכנולוגיים מדעיים. לימודי תיכון במקיף י״ב בפיזיקה ומדעי ההנדסה, בצבא מנהל רשת בתקשוב ולאחר מכן עבודה בתור IT באזרחות</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הבעיה שזיהיתי היא מוטיבציה נמוכה לעבודה ורצון מאוד גדול בגמישות בעבודה של הדורות הצעירים,  הצעירים רוצים שהעבודה תסבוב סביב חייהם ולא שחייהם יסבבו סביב העבודה.<br>וגם, מחסור בעובדים בקרב עסקים פשוטים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם שלי הוא פלטפורמה (אפליקציה / אתר) שבו מעסיקים יכולים לפרסם משרות מזדמנות (מלצרות, בר, קופה) לטווח קצר עם שכר ידוע מראש, פלטפורמה בה יכולים צעירים לעיין ולעבוד מתי שנוח להם לפי הפרסומים הקיימים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>הפלטפורמה תבוסס על אפליקציה / ווב בדומה לוולט לדוגמה ותצריך פיתוח, אחסון וניהול טכנולוגי</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1UHnVBUI4MguGS4X2pREBkmSF7NjPuKtu/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-14" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-14')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>עמית בן שטרית</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> אשדוד</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> אשדוד - 54</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני עובד כסקאוט כדורגל, ובמקביל מנהל קורסי הכשרה בחברת ישראכרט.<br><br>לאחרונה חוויתי אתגר מקצועי מהעבודה שלי כסקאוט. התפקיד של סקאוט הוא להיות במגרשים ולזהות כישרונות, אבל בפועל סקאוט אחד לא יכול להיות בכל משחק ובכל מקום.<br><br>כדי לגשר על הפער, פתחתי אינסטגרם ייעודי לחיפוש שחקנים צעירים שמעלים קטעים שלהם. גיליתי שיש שם הרבה כישרון, אבל הוא לא מגיע לקהל הנכון, סקאוטים ומועדונים, כי התוכן הולך לאיבוד בפיד כללי שלא בנוי לגילוי שחקנים.<br><br>האתגר הזה הוביל אותי לחשוב על פתרון, ומתוך העבודה בשטח נולד הרעיון לפלטפורמה ייעודית שמחברת בין שחקנים לסקאוטים בצורה פשוטה ומקצועית.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>שחקנים צעירים מעלים קטעים לרשתות חברתיות, אבל אין פלטפורמה ייעודית שמחברת אותם ישירות לסקאוטים ומועדונים. התוכן הולך לאיבוד בפלטפורמות כלליות, והסקאוטים מצדם מתקשים לסנן, לאתר ולעקוב בצורה מסודרת אחרי שחקנים רלוונטיים.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם מציע פלטפורמה ייעודית לשחקנים וסקאוטים. שחקנים יוצרים פרופיל מקצועי עם נתונים וקטעי וידאו, וסקאוטים יכולים לחפש לפי פילטרים מדויקים, לשמור שחקנים למעקב ולנהל תהליך סקאוטינג מסודר במקום אחד.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>המערכת מבוססת על פלטפורמה דיגיטלית עם מנוע חיפוש חכם לפי פרמטרים מקצועיים. בהמשך ניתן לשלב אלגוריתמים לניתוח וידאו, דירוג ביצועים והמלצות מבוססות נתונים שיסייעו לסקאוטים בקבלת החלטות.</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1Vno_8DIk6oo7qILud_AENdmAwY7mHYNz/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-15" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-15')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>אורי גרשוני</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> אשדות יעקב</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> טבריה</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>אני בתקופה של שינוי מקצועי. עשיתי עלייה ממיאמי לארץ, השתחררתי לא מזמן מהשירות והתחלתי לעבוד בעבודה זמנית בשעות לא פשוטות, תוך כדי שאני מחפש כיוון שבו אוכל להתפתח וללמד — שזה משהו שאני יודע שאני טוב בו ואוהב לעשות. האתגר הכי גדול לאחרונה היה להסתגל לשינויים הגדולים — מדינה חדשה, מסגרת חדשה ועבודה תובענית — ובכל זאת לשמור על מוטיבציה ואמונה בדרך גם כשאין עדיין יציבות. למדתי להתמיד, לקחת אחריות, ולבנות צעדים קטנים קדימה במקום לחכות לפתרון מושלם.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הצורך שזיהיתי הוא שיש הרבה אנשים שרוצים להתנדב ולעזור, אבל אין מסגרת פשוטה ומסודרת שמחברת בין מי שצריך עזרה לבין מי שמוכן לתת מזמנו. בנוסף, הרבה מתנדבים מרגישים שלעשייה שלהם אין המשכיות או הכרה, ולכן עם הזמן המוטיבציה יורדת. <br><br>המיזם שלי נותן מענה לבעיה הזו דרך פלטפורמה שמרכזת הזדמנויות להתנדבות, יוצרת חיבורים בין אנשים, וגם נותנת תמריץ חיובי בדמות נקודות שאפשר לממש לשירותים קהילתיים. כך נוצר מעגל של נתינה הדדית שמחזיק לאורך זמן ומגדיל את המעורבות בקהילה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>המיזם שלי פותר את הבעיה על ידי יצירת פלטפורמה מרכזית שמחברת בין אנשים שרוצים להתנדב לבין הזדמנויות בקהילה. הוא מספק מסגרת מסודרת שמאפשרת למתנדבים לראות בקלות איך ומתי הם יכולים לתרום, לעקוב אחרי הפעילות שלהם, ולצבור נקודות על העשייה. הנקודות האלה ניתנות למימוש לקבלת שירותים מקהילה של מתנדבים אחרים, מה שיוצר תמריץ ומחזיק את המוטיבציה גבוהה לאורך זמן. בצורה זו, המיזם גם מגביר את המעורבות, גם מאפשר תרומה משמעותית, וגם מחזק ערבות הדדית בקהילה.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>ההיבט הטכנולוגי במיזם מתמקד בפיתוח פלטפורמה דיגיטלית שתאפשר:<br><br>1. מעקב אחר התנדבות – כל מתנדב יכול לראות את הפעילות שלו, לצבור נקודות ולבדוק את ההיסטוריה שלו בצורה שקופה.<br>2. מערכת נקודות ותמריצים – הפלטפורמה מחשבת אוטומטית נקודות על פי סוג ההתנדבות, ומאפשרת לממש אותן לשירותים של מתנדבים אחרים.<br>3. חיבור בין משתמשים – כלי חיפוש והתאמה בין מי שמציע שירות לבין מי שמחפש עזרה, בצורה נוחה ומהירה.<br>4. ניהול קהילה ואירועים – ארגונים ועמותות יכולים לפרסם הזדמנויות התנדבות, לשלוח עדכונים ולהגביר את המעורבות של המתנדבים.<br><br>כל ההיבטים האלה נבנים בצורה ידידותית למשתמש, עם דגש על חוויית שימוש פשוטה ומעניינת, כדי לעודד מעורבות מתמשכת וליצור מערכת שמחזיקה את הקהילה פעילה לאורך זמן.</p>
-                </div>
-                
-                <a href="https://drive.google.com/file/d/1EVsuMxNxXgVs849nsQRNDJBlF20ZUqYe/view?usp=sharing" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-16" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-16')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>מתן לביא</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> מבוא ביתר</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> ירושלים (חורף 25)</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>התחלתי לאחרונה לעבוד כמדריך בקורס Python לילדים, די מהר נוכחתי לראות שחומרי הלימוד הם באנגלית בלבד וברמה גבוהה שלא מותאמת אליהם. כדי שהלמידה תהיה יעילה והתלמידים יחוו תחושת הצלחה ומסוגלות, החלטתי להכין לכל שיעור רשימת שאלות קטנות וממוקדות, ברמת קושי עולה. השינוי עזר לתלמידים להפנים את החומר בצורה חלקה, והפך את התסכול ההתחלתי שלהם למוטיבציה וביטחון עצמי.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>הבעיה היא שתרגול מתמטי עצמאי בבית הוא כרגע &#x27;עיוור&#x27; למצבו של התלמיד. כשתלמיד (או סטודנט) מתרגל לבד ונתקע, הפתרונות הקיימים בדרך כלל רק מספקים תשובה סופית או הסבר טכני אחיד. הם לא יודעים לאבחן למה הוא נתקע - האם יש לו פער ספציפי בהבנה שצריך לפרק, או שהוא בכלל נמצא בהצפה קוגניטיבית, בלבול וחרדה.<br><br>כתוצאה מכך, התלמיד ממשיך להיתקל בשאלות באותה רמת קושי, נכשל שוב, ונכנס ללופ של תסכול. הבעיה שאני רוצה לפתור היא הייאוש והפגיעה בביטחון העצמי שנוצרים שם. הצורך הוא במערכת תרגול שיודעת לזהות את מקור הקושי בזמן אמת, ולהתאים את התרגיל הבא בדיוק למה שהתלמיד צריך באותו רגע.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>הפתרון הוא לבנות פלטפורמת תרגול אדפטיבית שמתפקדת כמו מורה פרטי שיושב ליד התלמיד. המערכת תעקוב בזמן אמת לא רק אחרי התשובות (נכון/לא נכון), אלא גם אחרי מדדי התנהגות כמו זמן השהיה, מחיקות מרובות או קצב פתרון. כשהמערכת תזהה שהתלמיד תקוע או נכנס ללחץ, היא לא תציג מיד את הפתרון, אלא תבצע התאמה דינמית. קודם כל, היא תפרק את השאלה לחלקים קטנים יותר כדי לאתר את פער ההבנה הספציפי. במקביל, אם יזוהה תסכול משמעותי, המערכת תיקח באופן יזום &#x27;צעד אחורה&#x27; ותגיש תרגיל קל יותר באותו נושא. המטרה היא לייצר לתלמיד חווית הצלחה מהירה שתחזיר לו את תחושת המסוגלות והביטחון, ורק לאחר מכן לחזור ולהעלות את רמת הקושי בהדרגה מותאמת אישית.</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>ההיבט הטכנולוגי מתחלק לשני מרכיבים עיקריים. הראשון הוא אלגוריתם עצמאי שיודע לנתח, לפרק ולפשט תרגילים מתמטיים לתת-שלבים, ולספק תרגילים מותאמים לפי הצורך. המרכיב השני כולל מעקב אחרי מדדי התנהגות של המשתמש בזמן הפתרון (לדוג&#x27;: זמני השהיה, קצב הקלדה, כפתור עזרה) כדי לזהות תקיעות או מצוקה בזמן אמת, ולהפעיל את אלגוריתם הפישוט. הליבה הלוגית של המערכת תישאר עצמאית וחסכונית, והיא תוכנן כך שתוכל להתממשק ב-API עם כלי AI חיצוניים לטובת פיצ&#x27;רים משלימים.</p>
-                </div>
-                
-                <a href="https://docs.google.com/presentation/d/1DDr6iP2FXbIxqh_p8TSY_p42OXREiBrO/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener" class="pres-btn">צפה במצגת</a>
-            </div>
-        </div>
-
-        <div id="candidate-17" class="detail-view" style="display:none;">
-            <button class="back-btn" onclick="hideDetail('candidate-17')">&rarr; חזרה לרשימה</button>
-            <div class="detail-card">
-                <h2>גיא סוקולצקי</h2>
-                <div class="detail-meta">
-                    <span class="meta-item"><strong>עיר:</strong> קריית ים</span>
-                    <span class="meta-item"><strong>מחזור מסע:</strong> קריות מחזור 60</span>
-                </div>
-                <div class="detail-venture">
-                    <h3>—</h3>
-                </div>
-                
-                <div class="detail-section">
-                    <h4>רקע</h4>
-                    <p>בן 23,חייל משוחרר,יזם בעל עסק עצמאי לעריכת וידאו ויצירת תוכן ai לעסקים,<br>נאלצתי לסגור חנות אינטרנטית שהייתה לי בעקבות הצפה של השוק,תחרות גדולה מידי וחוסר רווחיות מה שעזר לי למקד את הידע והיכולת שלי סביב עריכות הוידאו ויצירת תוכן ai</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הבעיה</h4>
-                    <p>להרבה צעירים ובעיקר חיילים משוחררים יש יכולות וידע שרכשו במהלך השנים אך אין להם הרבה כסף במידה והם רוצים ללמוד דברים חדשים, ובעקבות עודף המידע שקיים היום לדור הצעיר הוא רוצה ללמוד/לנסות הכל ולא תמיד הוא רוצה ״לבזבז״ כסף  ו4 שנים על תואר ורוצה לבחון אם תחום מסויים מתאים לו</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>הפתרון</h4>
-                    <p>אפלקצייה של בנק הזמן, שכר בידע, כל משתמש שנרשם יוכל ללמד/לעזור למשתמש אחר שמעוניין בתחום ובתמורה לקבל שעת למידה אותה יוכל להמיר לשיעור בתחום שמעניין אותו</p>
-                </div>
-                
-                
-                <div class="detail-section">
-                    <h4>היבט טכנולוגי</h4>
-                    <p>אפליקצייה, יצירת פלטפורמה חברתית</p>
-                </div>
-                
-                
-            </div>
-        </div>
-
+            </tbody>
+        </table>
     </div>
-    <script>
-        function showDetail(id) {
-            document.getElementById('grid-view').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        function hideDetail(id) {
-            document.getElementById(id).style.display = 'none';
-            document.getElementById('grid-view').style.display = 'grid';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+
+<div id="detail-0" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>עדן בועז מימון</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ראשון לציון</span>
+            <span class="meta-item">מחזור מסע: ראשון לציון מחזור נובמבר 24</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה אינטגרטיבית לניהול מחלות כרוניות</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>היי אני עדן בועז מימון אני יזם חברתי ששואף להשפיע על החברה לעזור ולפרוץ דרך.<br>אני מתמודד עם קוליטיס כרוני במעי הגס, מחלה שהתגלתה אצלי במצב קשה וכללה תסמינים משמעותיים שפגעו בי משמעותית בתפקוד היומיומי. ההתמודדות היא לא תיאורטית אלא מציאות יומיומית של התמודדות<br><br>למרות זאת, בחרתי להירשם ללימודים אקדמיים ולא לדחות את החיים עד שהמצב יתייצב. האתגר המשמעותי ביותר שאני חווה כרגע הוא בתקופת מבחנים, כאשר חוויתי התקף חריף של המחלה לפניי כשבועיים ששיתק אותי פיזית בדיוק בזמן שבו נדרשתי לתפקד ברמה הגבוהה ביותר.<br><br>באותו רגע עמדתי בפני בחירה לוותר ולהיכנע לנסיבות או לקחת אחריות מלאה על מה שכן בשליטתי. ב&quot;ה בחרתי באחריות. פיתחתי שיטות למידה יצירתיות שמתאימות למצב הרפואי שלי, חילקתי עומסים אחרת, ניהלתי את האנרגיה בצורה מחושבת ובעיקר לא התביישתי לפנות לגורמים הרלוונטיים במוסד הלימודי כדי לבקש התאמות ותמיכה.<br><br>למדתי שיכולת לבקש עזרה היא לא חולשה אלא מנהיגות עצמית. הבנתי שגם תחת מגבלות רפואיות אפשר לייצר תנועה קדימה אם פועלים בצורה מודעת, מתוכננת ועקבית.<br><br>ההתמודדות הזו חידדה אצלי את ההבנה שהאתגר הוא לא רק המחלה עצמה אלא האופן שבו אדם מנהל את חייו סביבה. היום אני מביא את אותה גישה יוזמת ומעשית גם לעשייה היזמית שלי.</p></div><div class="detail-section"><h4>הבעיה</h4><p>בתור מתמודד עם קוליטיס הצורך שזיהיתי הוא פער מהותי בין עצם קיומה של מחלה כרונית לבין היכולת של אדם לנהל חיים שלמים סביבה בצורה יציבה, מסודרת ותומכת.<br><br>הבעיה איננה רק רפואית אלא מערכתית וחברתית. אדם עם מחלה כרונית אינו מנהל רק תסמינים. הוא מנהל בדיקות, רופאים, תורים, תרופות, תוספים, מסמכים, בירוקרטיה, זכויות, עבודה, לימודים וחיים אישיים במקביל. לעיתים קרובות הוא נדרש להתמודד לבד מול ביטוח לאומי, מערכות בריאות וגורמים מוסדיים, ללא הכוונה ברורה וללא כלים מסודרים.<br><br>מעבר לפיזור המידע ולעומס הידע הסותר, קיימת תחושת חוסר אונים עמוקה. רבים אינם יודעים מה מגיע להם, כיצד לבקש התאמות בלימודים או בעבודה, ואיך לשלב בין בריאות לחיים תפקודיים. הקושי אינו רק פיזי אלא גם רגשי וחברתי. תחושת בדידות, בושה וחוסר שייכות מלוות מתמודדים רבים.<br><br>הקהילות הקיימות לרוב מפוזרות ואינן מספקות תשתית מסודרת וארוכת טווח. בישראל אין כיום פלטפורמה אינטגרטיבית שמאגדת ניהול רפואי, הנגשת זכויות, תוכן מותאם, קהילה ותמיכה מעשית במקום אחד.<br><br>בנוסף קיימת בעיית מודעות ציבורית. מחלות כרוניות ובעיקר מחלות מעי אינן מדוברות בהיקף שתואם את סדר הגודל שלהן. חסר שיח פתוח ומנרמל שמציג את ההתמודדות כחלק מהחיים ולא כמשהו שיש להסתיר. העלאת מודעות דרך פעילות ברשתות החברתיות מאפשרת להגיע לקהלים רחבים, לייצר חשיפה משמעותית וליצור שיתופי פעולה רלוונטיים שיכולים להרחיב את ההשפעה ולהוביל לפרויקטים חברתיים נוספים.<br><br>המיזם מבקש לתת מענה כולל לשלושה מישורים מרכזיים<br>ניהול חכם ומאורגן של כלל ההיבטים הרפואיים והבירוקרטיים<br>יצירת קהילה בטוחה שמפחיתה בדידות ומחזקת תחושת שייכות<br>והובלת שינוי תודעתי רחב יותר סביב התמודדות כרונית<br><br>המטרה היא להפוך מצב של חוסר סדר וחוסר אונים למערכת שמייצרת שליטה, בהירות וחיים תפקודיים ויציבים יותר עבור אלפי מתמודדים.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם פותר את הפער שזוהה באמצעות יצירת פלטפורמה טכנולוגית חברתית אינטגרטיבית שמאגדת את כלל היבטי ההתמודדות במקום אחד.<br><br>ברמה הפרקטית, האפליקציה תשמש כמרכז ניהול אישי למתמודד. היא תאפשר סריקה ואיגוד מסמכים רפואיים,(אולי מחוברת למאגרים כדיי שיגיעו אוטומטית לאפליקציה) מעקב אחר תסמינים, בדיקות, תרופות ותוספים, תיעוד מסודר לאורך זמן ונגישות מיידית למידע רלוונטי. בכך היא מפחיתה את הפיזור והעומס ומחזירה שליטה למשתמש.<br><br>ברמה הבירוקרטית והיומיומית, הפלטפורמה תספק הנגשת מידע מסודר על זכויות, תהליכים מול גופים כמו ביטוח לאומי, אפשרויות התאמה בלימודים ובעבודה וכלים מעשיים להתנהלות נכונה. המטרה היא להפוך מידע מפוזר ולא ברור למערכת ברורה וישימה. בנוסף לכך היא תיהיה מחוברת לגופים וגורמים רלוונטים כמו מרפאות אנשיי מקצוע רופאים ויהיה בוט שיהיה ייעודי לענות על כל צורך שמתמודד צריך לדעת  על כל שאלה.<br><br>ברמה הקהילתית, תוקם קהילה דיגיטלית בטוחה ומבוקרת בתוך האפליקציה, שתאפשר שיח, שיתוף וחיבור בין מתמודדים בצורה מסודרת וארוכת טווח. הקהילה הקיימת כיום בוואטסאפ תהווה בסיס למעבר לפלטפורמה מקצועית יותר עם מנגנוני בקרה, חלוקה לפי תחומי עניין וסוגי התמודדות, ותשתית טכנולוגית שתאפשר תמיכה מתמשכת ולא אקראית.<br><br>בנוסף לשיח הקהילתי, הפלטפורמה תציע מסלולי ליווי מגוונים בהתאמה אישית. ליוויים דיגיטליים, קורסים מוקלטים ותוכניות עומק, לצד ליווי אישי או קבוצתי בהתאם לצורך של כל משתמש. כל מתמודד יוכל לבחור את רמת המעורבות והתמיכה שמתאימה לו, החל מתוכן פתוח ועד מסלול מובנה ומונחה.<br><br>מעבר למרחב הדיגיטלי, הקהילה תתרחב גם לפעילות פיזית. מפגשי חיזוק, הרצאות, ערבים ייעודיים, סדנאות ואירועים קהילתיים שייצרו תחושת אחווה אמיתית וחיבור אנושי. השילוב בין דיגיטל לפיזי נועד להפוך את הקהילה ממקום של שיתוף בלבד למרחב חי, פעיל ותומך.<br>ברמה התודעתית, פעילות סושיאל עקבית ומקצועית תמשיך להעלות מודעות, להנגיש את השיח ולהגיע לאנשים שאינם מודעים לאפשרויות התמיכה הקיימות. התוכן ישלב בין רצינות, ידע ונגישות, וייצר תנועה רחבה סביב הנושא ויכולת ליצור פרוקטים חדשים שם ולהתפתח למקומות נוספים.<br><br>בעתיד, שילוב טכנולוגיות מתקדמות יאפשר התאמה אישית חכמה על בסיס נתוני המשתמש, זיהוי דפוסים ומתן תובנות מותאמות, ובכך להפוך את הפלטפורמה לכלי פרואקטיבי ולא רק ריאקטיבי.<br><br>המיזם אינו מציע פתרון נקודתי אלא מערכת כוללת שמחברת בין ניהול רפואי, בירוקרטי, חברתי ותודעתי ובכך מחסה את כל הנקודות שהמשתמש צריך.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>ההיבט הטכנולוגי במיזם מתבטא ביצירת פלטפורמה דיגיטלית אינטגרטיבית שמרכזת, מארגנת ומנתחת את כלל נתוני ההתמודדות של המשתמש במקום אחד.<br><br>האפליקציה תאפשר סריקה חכמה של מסמכים רפואיים, איחוד נתונים ממקורות שונים ויצירת תיק רפואי דיגיטלי מסודר ונגיש. מעבר לאחסון מידע, המערכת תאפשר מעקב אחר תסמינים, בדיקות, תרופות ותוספים לאורך זמן, ובכך תייצר בסיס נתונים אישי שיאפשר זיהוי דפוסים ותובנות מותאמות.<br><br>הפלטפורמה תשלב מנגנוני התאמה אישית מבוססי נתונים שיאפשרו למשתמש לקבל תוכן, כלים והכוונה רלוונטיים לפי סוג המחלה, שלב ההתמודדות והצרכים האישיים שלו. בשלב מתקדם יותר, ניתן יהיה לשלב רכיבי בינה מלאכותית לזיהוי מגמות, התרעות מוקדמות והצעת פעולות פרואקטיביות.<br><br>בנוסף, המערכת תכלול תשתית דיגיטלית לקהילה מבוקרת, לליוויים אישיים וקבוצתיים, לקורסים מקוונים ולאירועים. כל אלו יתנהלו בתוך סביבת משתמש אחת מאובטחת ומסודרת.<br><br>פעילות הסושיאל מהווה שכבת הפצה דיגיטלית משלימה. הרשתות החברתיות ישמשו להנגשת ידע, יצירת מעורבות והבאת משתמשים לפלטפורמה, תוך בניית אמון ושיח פתוח סביב מחלות כרוניות. בכך נוצר חיבור בין תוכן דיגיטלי רחב לבין מערכת טכנולוגית עמוקה ומבוססת נתונים.<br><br>החדשנות במיזם היא בחיבור בין ניהול רפואי, ניתוח נתונים, קהילה וליווי בתוך תשתית דיגיטלית אחת, עם פוטנציאל סקייל והשפעה רחבה.</p></div>
+        <a href="https://docs.google.com/presentation/d/1KS7GRey53DOSC8VxRcPdUY4I2kl3qjiY/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(-1)" disabled>→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(1)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-1" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>יצחק ליאור</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ירושלים</span>
+            <span class="meta-item">מחזור מסע: ירושלים , מחזור 3</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה דיגיטלית לבדיקת זכויות בנייה ופינוי-בינוי עם AI</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אוהב אתגרים וספורט, ניסיון באבטחת שגרירויות ישראל ברחבי העולם, מדריך צלילה חופשית , סיימתי לפני כחודש שיקום ברך לאחר ניתוח שארך שנה.</p></div><div class="detail-section"><h4>הבעיה</h4><p>חוסר ידע ובהירות לגבי עולם הפינוי בינוי בפרט והנדלן בכלל. <br>אדם פשוט לא יכול לדעת או יתקשה מאוד חדעת לבדו מה זכויות הבניה וההשפעה שלהן על שווי הנכס שלו.<br>זה מקשה על בעלי נכסים במכירה, בעלים בהתארגנות לפרויקט פינוי-בינוי ויזמים בבדיקת זכויות, ומחייב פניה לאנשי מקצוע - אדריכלים, שמאים ועורכי דין ותשלום סכומים משמעותיים עבור הבדיקה.</p></div><div class="detail-section"><h4>הפתרון</h4><p>ריכוז המידע , השלבים, החוקים בפלטפורמה דיגיטלית שתוכל להגיע לכל יד ובכל שפה נדרשת , באמצעות המיזם ניתן יהיה לערוך בדיקת זכויות ותחשיב כלכלי באמצעות כלי AI מתקדמים, ולהציג ללקוח מידע נגיש ומעובד.  <br>לצורך הדוגמא <br>בדיקת זכויות והערכת שמאי לנכס עולות לאדם פרטי כ-10,000 שח.<br>אוטומטיזציה של התהליך תוכל להציע תחליף זול ומהיר יותר ולתת ערך אמיתי במחיר זול משמעותית.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>דיגיטליזציה של חומרים ומידע רב וריכוזם במקום אחד בו קל לחפש ולמצוא את הנדרש, בכל שפה וזמן רצויים והחלפת עבודת ניתוח והערכת שווי זכויות שנעשית על ידי אנשי מקצוע, באמצעותי כלי AI מתקדמים ובכך לחסוך עלויות גבוהות .</p></div>
+        
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(0)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(2)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-2" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>דניאל בן צור</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ירושלים</span>
+            <span class="meta-item">מחזור מסע: ירושלים</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמת SaaS לניהול עסקאות מיקרו-משפיענים מול מותגים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>בתקופת התיכון הצבתי לעצמי כטרה להגיע לTOP 3 באירופה בענף ספורט שעסקתי בו באותה תקופה.<br>קבעתי לעצמי את המטרה הזו וקפצתי למים. לקח לי שלוש שנים עם הרבה זמן ומאמץ שהושקע, מספר אכזבות משמעותיות והפקת לקחים- והשגתי את המטרה שהצבתי לעצמי.<br><br>בשירות הצבאי שלי הייתי האדם שמוביל פרוקייטים חשובים ובוחרים לתת לו את המשימות שרצו שיתבצעו ברמה גבוהה מאד. <br><br>מכל החוויות בשירות וגם בתיכון יצאתי עם תחושה שעם הרבה מאמץ וחוסן נפשי לעמוד באכזבות לאורך הדרך- אצליח לכבוש כל מטרה שאציב לעצמי.</p></div><div class="detail-section"><h4>הבעיה</h4><p>המיזם בא להקל על מיקרו-משפיענים שמנסים לנהל עסק שלם לגמרי לבד. היום שוק העסקאות הישירות מול מותגים קטנים-בינוניים מתנהל בבאלגן: בלי חוזים, בלי סדר ובלי גב של סוכן. המיזם מביא למשפיענים הקטנים את מה שהיה עד היום רק לגדולים- &#x27;סוכן&#x27; דיגיטלי שעושה עבורם את כל העבודה השחורה. הפתרון הזה נותן להם את השקט הנפשי להתעסק נטו ביצירת תוכן, במקום בניהול בירוקרטי של העסק.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם מעניק למשפיען לינק ל-BIO המרכז ומסנן את הפניות למשפך עבודה מסודר, מייצר חוזה וסוגר עסקה בקליק אחד של המשפיען. כדי להסיר את נטל הבירוקרטיה, המיזם פועל כצינור סליקה שדואג אוטומטית לקבלות ולתשלומי המס מול המותג. לצד הניהול הפיננסי, המערכת מציעה סל כלים מקיף לניהול השוטף: יומן משימות, דירוג הוגנות ומוסר תשלומי מותגים, ויצירת דף נחיתה מקצועי המציג את נתוני המשפיען.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>הטכנולוגיה המרכזית של המיזם היא פלטפורמת SaaS המייצרת תהליך עבודה אוטומטי מקצה לקצה. מרגע ההרשמה והגדרת ההעדפות והתמחור, המערכת מסננת פניות בזמן אמת, מרכיבה חוזים משפטיים ושולחת התראה למשפיען. עם אישורו, נשלחת אוטומטית דרישת סליקה למותג. המעטפת הטכנולוגית כוללת בנוסף הרכבה אוטומטית של מדיה קיט דינמי המתעדכן בזמן אמת, סוכן AI לניהול משא ומתן (עבור מנויים), ומנוע חיפוש פנימי חכם המאפשר למותגים לאתר בקלות משפיענים המיוצגים בפלטפורמה.</p></div>
+        
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(1)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(3)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-3" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>דוד טגניה</h2>
+        <div class="detail-meta">
+            <span class="meta-item">עפולה</span>
+            <span class="meta-item">מחזור מסע: עפולה מחזור 2025</span>
+        </div>
+        <div class="detail-venture"><h3>אוטומציית AI להפיכת חומרי לימוד למשחקים אינטראקטיביים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני בן 26, הנדסאי חשמל והקמתי עסק אינטרנטי.<br>העסק האינטרנטי הינו אתר אינטראקטיבי ללמוד השפה האמהרית וחיזוק הקשר הבין דורי.<br>האתר מלמד בצורה של קרוסים, שיעורים עם משחקים דיגיטליים (שיצרתי) ושאלוני מעבר. בצורה כיפית וחווייתית. <br>ולמדתי המון בתהליך מבחינת התפתחותית, עסקית והוראתית.</p></div><div class="detail-section"><h4>הבעיה</h4><p>זיהיתי שבעולם ה-E-learning: תהליך היצירה של חומרי לימוד אינטראקטיביים הוא איטי, יקר ומלא באתגרים טכניים. כיום, רוב הקורסים בשוק מסתפקים בפורמטים סטטיים (וידאו ו-PDF) כי יצירת משחקים או פעילויות מותאמות אישית דורשת זמן פיתוח ארוך ומשאבים רבים. המיזם שלי פותר את חוסר היעילות הזה ומאפשר לייצר תוכן עשיר ומערב (Engaging) במינימום זמן ומאמץ.</p></div><div class="detail-section"><h4>הפתרון</h4><p>אוטומציית AI: המערכת מנתחת חומרי לימוד גולמיים והופכת אותם מיידית למשחקים אינטראקטיביים המותאמים אישית לכל שיעור.<br><br>נגישות טכנולוגית: יצירת חוויות למידה עשירות בלחיצת כפתור, ללא צורך בידע בתכנות, בעיצוב או במשאבי פיתוח יקרים.<br><br>יעילות מקסימלית: קיצור זמני העבודה , מה שהופך תהליך שהיה איטי ומסורבל למהיר, זול ופשוט ליישום עבור כל מרצה.<br><br>שיפור הלמידה: הפיכת הלומד מפסיבי לאקטיבי באמצעות גיימיפיקציה, מה שמעלה משמעותית את אחוזי ההתמדה והצלחת הקורס.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>הליבה הטכנולוגית של המיזם מבוססת על אוטומציית AI (בינה מלאכותית). המערכת יודעת לנתח חומרי לימוד גולמיים ולהמיר אותם באופן אוטומטי למשחקים לימודיים אינטראקטיביים המותאמים ספציפית לתוכן של כל שיעור. הטכנולוגיה מקצרת משמעותית את זמני הפיתוח ומנגישה יכולות של &#x27;גיימיפיקציה&#x27; מתקדמת לכל מרצה או מוסד לימודי, ללא צורך בידע בתכנות או בעיצוב.</p></div>
+        
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(2)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(4)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-4" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>עידו חן</h2>
+        <div class="detail-meta">
+            <span class="meta-item">הוד השרון</span>
+            <span class="meta-item">מחזור מסע: נתניה, נובמבר 25</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה טכנולוגית מבוססת AI לעסקים קטנים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני עידו חן, בן 21 גר בהוד השרון<br>בן לאלי ונועה,<br>ספורטאי בתחום מרוצי אופנועים,<br>אלוף ישראל בקטגוריית ה600 סמ&quot;ק ומתחרה בינלאומי בתחרויות.<br>בצבא שיררתי כספורטאי מצטיין בחיל הים, והתעסקתי במשך השירות שלי בתהליכי רכש אמל&quot;ח בשייטת 13.<br><br>הקשר שלי לעולם הטכנולוגי מתחיל מגיל צעיר, גדלתי עם האייפון הראשון בכיס וכבר בגילאי יסודי הייתי בונה ופורץ משחקים למחשב בבית.<br>לימדתי את עצמי לכתוב קוד בגיל 16, שולט בפייתון ובעבר נגעתי מעט בשפות שונות,<br>התעסקתי בבניית פרוקטים אישיים, כתבתי משחקים לטלפון האישי ובניתי סרברים לי ולחברים שלי<br><br>השתחררתי מהצבא לפניי כ4 חודשים, היום מתעסק בעיקר בניהול הפאן הטכנולוגי והשיווקי בעסק של אבי<br>עסק לימוד נהיגה לאופנועים, <br>אני מנהל את כל נושא - הסושיאל, תוכן ממומן, פרסום ושיווק, בניית האתרים, בניית אוטומצייות וכתיבת פרויקטיים פנים שמייעלים תהליכים, מכירות, CRM.<br><br>לאחרונה בעיקר פוגש אותי כאתגר כל נושא המכירות, תחום מאוד מאוד קריטי כיזם, ובנוסף גם מאוד מאתגר,<br>אני מתפקס ביום יום בעיקר באיך להשתפר בנושא הזה וחושב איך אני יכול לייעל תהליכים.</p></div><div class="detail-section"><h4>הבעיה</h4><p>הבעיה המרכזית היא הפער הטכנולוגי ההולך וגדל בין עסקים מסורתיים לבין העולם החדש.<br>בעלי עסקים קטנים רבים מתקשים לאמץ כלי התייעלות, אוטומציה וAI, מה שמשאיר אותם בעמדת נחיתות משמעותית מול מתחרים שכבר עשו את הקפיצה הזו. <br>המיזם בא לפתור את חוסר הנגישות הזה ולמנוע מהם להישאר מאחור</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם שלי בא לפתור את הכאב ראש הטכנולוגי של עסקים קטנים.<br>הפתרון בא לשלב נכסים דיגיטליים כמו אתרים ותוכנים בעזרת AI, מערכת שיווק ופרסום שתהיה קלה ופשוטה להבנה לאנשים לא טכנולוגיים,<br>וCRM מינימליסטי ומדויק שלא מציף את הלקוח במידע שלא רלוונטי לעסקים קטנים.<br>המטרה היא להחליף את המערכות הקיימות, שהן לרוב יקרות ומסובכות מדי לתפעול, בכלי אחד פשוט וקל להבנה</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>הליבה הטכנולוגית היא שילוב של מנועי AI ואוטומציה, שיהיו עטופים בפלטפורמת Web/Mobile שתשים פוקס על פשטות.<br>המערכת לוקחת יכולות טכנולוגיות מורכבות כמו אופטימיזציה של קמפיינים וניתוח שיחות מכירה ומבצעת אותן אוטומטית ברקע, כך שהמשתמש נהנה מהתוצאה הטכנולוגית בלי להתעסק יותר מידי ב&#x27;איך&#x27; זה עובד</p></div>
+        <a href="https://docs.google.com/presentation/d/1JqC4ENt9mE8eSrXPd0-TUhU-veF1LwI5/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(3)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(5)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-5" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>רן עוקשי</h2>
+        <div class="detail-meta">
+            <span class="meta-item">נתניה</span>
+            <span class="meta-item">מחזור מסע: נתניה מחזור 38</span>
+        </div>
+        <div class="detail-venture"><h3>אפליקציה לניהול כלכלי אישי עם AI — חבר כלכלי דיגיטלי</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>שלום לכולם, אני רן עוקשי בן 25 מנתניה, בוגר תכנית מסע אל האופק, כיום עובד כאיש מכירות בחברת קימאמה. אז קצת עליי, נולדתי וגדלתי בנתניה כל חיי, למדתי בתיכון טשרניחובסקי במגמות תיאטרון, כלכלה ומדעי המדינה. התגייסתי לשירות קרבי בתור לוחם בחטיבת גבעתי, לאחר שנה ירדתי מלוחמה עקב מורכבות נפשית שהבנתי שהתפקיד גדול עליי. אחרי הצבא עבדתי בכל מיני מקומות, הייתי טכנאי בחברת מגלקום שעוסקת בתשתיות תקשורת, עבדתי במוקד המכירות של חברת פספורטקארד ולאחר מכן בודק בטחוני בנמל התעופה בן גוריון. במהלך תקופת העבודה שלי בנתב&quot;ג, התבשרנו שאחיינית שלי (ילדה בת 7 אז) אובחנה כחולה בלוקמיה- סרטן הדם. את האתגר והתקופה הזו לא אשכח בחיי, ואני שמח על התקופה הזו כי היא לימדה אותי כל כך הרבה ושינתה לי את החיים. למדתי איך אפשר לתת קצת מקום לעצב ולפחד והרבה מקום לשמחה וחיוביות. הכרתי את כל עולם המניפסטינג ומחשבה יוצרת מציאות, איך לשנות פרספקטיבה בחיים ולמצוא את הטוב בכל דבר &quot;רע&quot; שקורה בחיינו ולהיאחז בו, כי זו המוטיבציה הכי טובה להמשיך ולעשות את מה שנועדנו אליו. בזכות התקופה הזו עשיתי איזה שהוא שינוי מחשבתי שעוזר לי בכל פעם מחדש כשאני נתקל באתגר או משבר קטן בחיי. כיום היא בריאה ואנחנו אחרי כל התקופה הזו, מצטער אם השארתי במתח   ;)</p></div><div class="detail-section"><h4>הבעיה</h4><p>בתקופה שבה המציאות הכלכלית מאוד קשה במיוחד עבור הדור הצעיר של מדינת ישראל, וחסכון לדירה נראה לא אפשרי בלי עזרה מהבית, זיהיתי את הצורך שלכל אדם יהיה חבר כלכלי, אחד כזה כמו הצ&#x27;אט ג&#x27;יפיטי שיש לכולנו כמעט, רק שהייעוד של החבר זה הוא ללמד אותנו להתנהל חכם עם הכסף שלנו, ללמד אותנו כיצד לחסוך, איך להתמודד עם בלת&quot;מ כלכלי שהפתיע אותך, איך בכלל להגדיר מטרה כלכלית שאתה רוצה לחסוך אליה, בין אם זה טיסה לחו&quot;ל עם חברים, רכב או אפילו דירה. כל דבר שרק עולה לנו לראש.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם שלי הולך לפתור את הבעיה בכך שהוא הולך להפוך להיות החבר הכלכלי שלנו, הוא יישלח לנו הודעות כל יום, הוא לא יהיה חופר, הוא יהיה חברותי, ייתן לנו טיפים, יעודד אותנו כשאנחנו מתקדמים ויעזור לנו לקום בנפילות, ואולי הכי חשוב, יעזור לנו לפתח התמדה והגדרת מטרות, שניים מהדברים החשובים ביותר עבור כל אדם שרוצה להצליח, ומי מאיתנו לא רוצה ? החבר הזה יהיה אפליקציה של התנהלות כלכלית- פיננסית, אחת כזו שאתה מזין את כל המצב שלך *היום* ומה עושים הלאה. לא מסתכלים אחורה, לא בוכים על העבר, אלא להסתכל קדימה ולצאת לדרך. אל האפליקציה יכולים להרשם סוכנים פנסיונים ומלווים כלכליים או כל אדם בר-סמכא בתחום ההתנהלות הכלכלית, הם ייתנו טיפים שיוכלו לעזור לאנשים להתקדם ולגדול, ובו זמנית משתמשי האפליקציה יחליטו שהם רוצים ללכת לתהליך ליווי או תכנון פנסיוני אצל אותם יועצים\סוכנים\מלווים.<br>במהלך 3 חודשי שימוש החבר לומד אותך כאדם, כמה אתה מבזבז ועל מה, באילו שעות וימים אתה מבזבז יותר מבזבז פחות, ואחרי שהחבר למד את הדפוס הראשוני של ההתנהלות הכלכלית שלך, הוא יידע איך לייעל אותך ולהביא אותך לאן שאתה רוצה להגיע. הלמידה לא נגמרת אחרי 3 חודשים אבל, החבר ימשיך ללמוד אותך ויעזור לך לאורך כל הדרך. החבר יקטלג הוצאות, על מה אתה מוציא וכמה, תהיה אופציה לכאלו המתנהלים עם מזומן, משהו שהיום קשה לעקוב אחריו בניגוד לכרטיסי אשראי שיש דפי פירוט מסודרים.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>אפליקציה משולבת AI שמזהה חיוב באפל או גוגל פיי וישר מקפיצה התראה עבורך שאתה יכול להזין שם לטובת ההוצאה שעכשיו ביצעת.</p></div>
+        <a href="https://drive.google.com/file/d/17LtsERH696-gTvubwvNzO5tpzsNhUbO6/view?usp=sharing" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(4)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(6)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-6" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>תומר זילברשטיין</h2>
+        <div class="detail-meta">
+            <span class="meta-item">באר שבע</span>
+            <span class="meta-item">מחזור מסע: באר שבע מחזור 1</span>
+        </div>
+        <div class="detail-venture"><h3>ניתוח וידאו לשיפור יכולות טכניות של ספורטאים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני סטודנט למדעי המחשב באוניברסיטה הפתוחה , יש לי פרויקט קוד ענק שאני עובד עליו ואני צריך ללמוד בשבילו הרבה ,אני מתקשה לנהל את הזמנים שלי כמו שצריך,יש לי הרבה דברים שאני רוצה לעשות להספיק וללמוד</p></div><div class="detail-section"><h4>הבעיה</h4><p>שיפור יכולות טכניות של ספורטאי דרך צפייה בוידאו שלו</p></div><div class="detail-section"><h4>הפתרון</h4><p>קוד ומתמטיקה</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>קוד</p></div>
+        <a href="https://docs.google.com/presentation/d/1VNp0HAkiPgfz4wCEB5kECicPhh8Q41vX/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(5)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(7)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-7" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>ירין חמדאן</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ג׳ולס</span>
+            <span class="meta-item">מחזור מסע: ג&#x27;ולס</span>
+        </div>
+        <div class="detail-venture"><h3>מקל הליכה חכם לאוכלוסיות הגיל השלישי</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני סטודנטית להנדסת חשמל ואלקטרוניקה, בעלת תשוקה ללמידה מתמדת ולפיתוח טכנולוגי. אני שואפת להשתלב בפרויקטים טכנולוגים מאתגרים.<br>במסגרת השאיפה שלי להתפתחות מקצועית, השתתפתי בהאקתון טכנולוגי הממוקד בפתרונות לגיל השלישי. במהלך האירוע פיתחנו (יחד עם צוות) פרויקט Multi-disciplinary המשלב אינטגרציה בין חומרה לתוכנה, וזכינו במקום השני. הפרויקט דרש יכולת למידה עצמית מהירה, עבודה תחת לחץ ופתרון בעיות הנדסיות מורכבות.</p></div><div class="detail-section"><h4>הבעיה</h4><p>צוותי חבלה, חיילים ואזרחים נחשפים לסכנת חיים כאשר הם מתמודדים פיזית עם חפצים חשודים, מוקשים ושברי טילים. הרובוטים הקיימים כיום דורשים שליטה ידנית מלאה וחסרים בינה מלאכותית – כלומר כל טעות של המפעיל עלולה לעלות בחיים. הפרויקט בא לפתור את זה על ידי רובוט חכם ואוטונומי חלקית שמסוגל לזהות, לנתח ולפעול בסביבות מסוכנות – בלי להסכן בני אדם.</p></div><div class="detail-section"><h4>הפתרון</h4><p>הרובוט משלב מצלמות, חיישנים ובינה מלאכותית לזיהוי חפצים מסוכנים בזמן אמת. הוא מופעל מרחוק דרך אתר ייעודי או באמצעות פקודות קוליות ומחוות יד, ומצויד בזרוע (מניפולטור) לטיפול פיזי בחפצים. כך ניתן לשלוח את הרובוט לסביבה מסוכנת במקום בן אדם, לקבל תמונה ומידע בזמן אמת, ולבצע פעולה מבוקרת – הכל מרחוק ובבטחה.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>המיזם מבוסס על מספר שכבות טכנולוגיות: עיבוד תמונה ולמידת מכונה לזיהוי חפצים מסוכנים, תקשורת בזמן אמת בפרוטוקול , מערכת שליטה מרחוק דרך אתר React עם ממשק אינטראקטיבי, ועיבוד אותות קוליים עם AI. חומרת הליבה כוללת חיישנים ומניפולטור לפעולה פיזית. כל הרכיבים עובדים ביחד כמערכת משולבת ומאפשרים שליטה גם לאנשים עם מוגבלויות.</p></div>
+        <a href="https://docs.google.com/presentation/d/1hJJYMO4U3Auirqq6ald0CJ7-u5akLaSB/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(6)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(8)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-8" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>עידו אורייה יוסף</h2>
+        <div class="detail-meta">
+            <span class="meta-item">פתח תקווה</span>
+            <span class="meta-item">מחזור מסע: פתח תקווה מחזור 46</span>
+        </div>
+        <div class="detail-venture"><h3>מכשיר לאיזון צ׳אקרות באמצעות תדרי סאונד ואפליקציית ביופידבק</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>עידו אורייה בן 24 לומד כרגע את תחום הטיפול והנמרולוגיה מאוד מאמין בעולם הרוחני והתפתחות רוחנית ורוצה להנגיש את זה לציבור הרחב בדרך קלה יותר</p></div><div class="detail-section"><h4>הבעיה</h4><p>חוויתי כאבים בבטן במשך תקופה ארוכה ולא הבנתי למה רופאים לא ידעו לשים את האצבע מה זה , הלכתי לטיפול עם סאונד הילינג באמצעות קערות טיבטיות וגיליתי שצאקרת הבסיס לא מאוזנת וכאבי הבטן נעלמו כלא היו</p></div><div class="detail-section"><h4>הפתרון</h4><p>הבעיה פה שצריך ללכת למטפל שיודע איך לטפל עם קערות טיבטיות ואני רוצה להנגיש שכול אחד שחווה חוסר איזון יוכל להשתמש בהתאם לצורך</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>בעצם בגוף האדם בעולם הרוחני יש 7 צאקרות,כול צאקרה מתארת היבט אחר במסורת הסינית ידעו מימי קדם איך לטפל בנושא חלק גדול מזה היה קערות טיבטיות ובמילים יותר פשוטות טיפול בצלילים שנקרא גם תדרי סולפג&#x27;יו , גוף האדם מורכב מ70% מים וכול סאונד מייצר וויברציה שמשנה את המים בגוף כול צאקרה מיוחסת לתדר שונה למשל צאקרת הבסיס 396HZ אני רוצה לייצר מוצר שכרגע אין אותו בעולם למיטב ידעתי שבעצם יהיה סוג של כפתור או מכשיר חשמלי שיתמגנט לגוף באותו אזור ויוכל לייצר ויברציה של אותו הסאונד , במקביל לייצר אפליקציה שנותנת ביופידבק על אותו אזור.</p></div>
+        <a href="https://docs.google.com/presentation/d/1qXuGs6pX1m6JT25Bdq62FZWWLdOlEf0G/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(7)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(9)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-9" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>ליאל דבח ורועי חלמיש</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ירושלים</span>
+            <span class="meta-item">מחזור מסע: ירושלים לפני 2 מחזורים</span>
+        </div>
+        <div class="detail-venture"><h3>רשת חברתית עם ביקורות מיקום לחיבור לקוחות ועסקים בתחום הביוטי</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>בן 25 עצמאי בתחום האיטומים וחבל חדש בירושלים</p></div><div class="detail-section"><h4>הבעיה</h4><p>חיבור בין לקוחות קצה לעסקים בתחום הביוטי</p></div><div class="detail-section"><h4>הפתרון</h4><p>רשת חברתית עם ביקורות מיקום ותוכן של בעלי העסקים</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>אתר/ אפליקציה</p></div>
+        
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(8)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(10)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-10" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>נתנאל כהן</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ירושלים</span>
+            <span class="meta-item">מחזור מסע: חורף 2024 ירושלים</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה למכירה וקניה של מוצרים וקורסים יהודיים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני בוגר הנדסת חשמל ממכון לב וכיום עובד בעיריית תל-אביב בתור מנהל פרוייקטים . אחד הדברים שאני הכי נהנה בהם הוא שהקמתי אתר של ניהול חניות אינטרנטיות לספרי קודש, שמציעה ספרי קודשבמגוון שפות . החניות לא רק מספקת מגוון רחב של ספרים אלא גם מעניקה ערך חינוכי ללקוחות, עם אפשרויות חיפוש נוחות, תכנים על פרשת השבוע וענייני דיומא. המיזם הזה אפשר לי לשלב בין יזמות דיגיטלית לבין אהבה לעולם העסק, ולראות תוצאות ממשיות של העבודה שלי.באתר שלי כל אחד יכול להעלות ספרי קודש ויודאיק להציע למכירה</p></div><div class="detail-section"><h4>הבעיה</h4><p>שוק עבור מיזמים יהודיים קטנים<br>חיסכון בזמן ובמאמץ<br>חיבור הקהילה<br>אמינות ובטיחות בקנייה<br>נגישות למוצרים יהודיים איכותיים<br>חיבור ישיר בין מוחרים ולבין קונים<br>קהל יעודי מאוד פציפי <br>יצירת מקומות עבודה עצמאיים</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם שלי מספק פלטפורמה מקוונת מרכזית שניתן למכור ואו לקנות של מוצרים/קורסים/מקצועות של יהודות</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>אני רוצהלפתח פלטפורמה יחודי שבה כל אחד יכול למכור ואו לקנות מוצרי יהדות בשונה מפלטפורמות קיימות שיש שם כל הקטגוריות חוץ ממוצרי יהדות ויש תנאים מאוד מגבילים למוכרים</p></div>
+        <a href="https://docs.google.com/presentation/d/1uPcUsu0Ixj6uDfHFeZEO23EekAHaCA-g0tJ3mw7uXRw/edit?usp=sharing" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(9)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(11)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-11" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>אמיר גבאי-טוטחאזן</h2>
+        <div class="detail-meta">
+            <span class="meta-item">פתח תקווה</span>
+            <span class="meta-item">מחזור מסע: פתח תקווה נובמבר 2025</span>
+        </div>
+        <div class="detail-venture"><h3>מוח ארגוני שיתופי — תיעוד ידע אוטומטי עם AI לארגונים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני אמיר בן 21 נולדתי וגדלתי בפתח תקווה אני בן אדם מאוד סקרן ושואף לקחת את הצעד הבא בעולם הטכנולוגי שתמיד הרגשתי חלק ממנו. הייתי משחק&#x27; במחשב מגיל צעיר והייתי תמיד &quot;הטכנאי של הבית&quot;. בצבא שירתתי בתור מנהל רשת, ובהמשך השירות שלי התקדמתי להיות ראש צוות. השתחררתי ביוני 2025 ומאוקטובר אני עובד בחברת מגדל בתור טכנאי pc ורשתות. אתגר שחוויתי לאחרונה זה פריקת כתף  שהגבילה אותי ביד אחת ומגבילה הרבה מהתחביבים שלי כולל העבודה, אבל אני חוזר לפעולה ונעזר בכלים כמו text to speach ליעול במקום הקלדה .</p></div><div class="detail-section"><h4>הבעיה</h4><p>הבעיה היא דליפת ידע ארגוני. בארגונים תפעוליים, הידע הקריטי נמצא בראש של העובדים ולא מתועד.<br>1. בזבוז זמן: חברות מפסידות מיליארדים על Downtime  של מכונות ושרתים בזמן שטכנאים מחפשים פתרונות שכבר קיימים בארגון.<br>2. תיעוד מיושן: עובדי שטח לא מסוגלים או רוצים לשבת לכתוב מסמכים טכניים. כתוצאה מכך, אין זיכרון ארגוני.<br>3. כל עובד משתמש בai שלו ומפצח בעיות איתו, הבעיה שזה נשאר אצלו. אם היה ai שיתופי לפתרון בעיות ולרכז הכל ל&quot;מוח אחד&quot;. ככה שבעזרת מנוע חיפןש אפשר למצוא בקלות תקלות שכבר מישהו התייעץ לגביהן עם בינה מלאכותית ולדעת מי התעסק במה.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם פותר את הבעיה על ידי יצירת &quot;מוח ארגוני שיתופי&quot; המבוסס על תיעוד אקטיבי ללא מאמץ; במקום שהעובד ימלא טפסים, הוא מתייעץ עם סוכן AI ארגוני ייעודי שמסייע לו לפצח את התקלה בזמן אמת, כאשר כל תהליך הפיצוח – כולל הודעות קוליות, תמונות מהשטח והצעות הפתרון – נשמר באופן אוטומטי כ&quot;נכס ידע&quot; קהילתי. המערכת הופכת את השיח הזה למדריכים קצרים וברורים (Step-by-Step) המונגשים לכלל העובדים באמצעות מנוע חיפוש סמנטי חכם או סריקת קוד QR על גבי המכונות, כך שבפעם הבאה שמישהו ייתקל באותה בעיה, הוא לא יצטרך להתחיל מאפס אלא יקבל מיד את הדרך שבה העובד הקודם פתר זאת בעזרת ה-AI. בדרך זו, התוכנה מבטלת את &quot;איי המידע&quot; האישיים, חוסכת זמן עבודה יקר, ויוצרת רצף של מומחיות ארגונית שרק הולכת ומשתפרת עם כל תקלה שנפתרת, תוך שהיא הופכת את התיעוד מחובה מעיקה לתוצר לוואי טבעי של העבודה.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>Speech-to-Expert Text , RAG , Semantic Search &amp; Vector DB, ויכולת זיהוי ויזואלית של מכשור וקודים (QR) המאפשרת להקפיץ את הידע הרלוונטי למסך העובד ברגע שהוא מכוון את מצלמת הטלפון לעבר התקלה</p></div>
+        <a href="https://docs.google.com/presentation/d/1WSMtHcGILwv-8CX9-ugrOpwTwMowqORs/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(10)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(12)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-12" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>ידידיה רבינוביץ</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ירושלים</span>
+            <span class="meta-item">מחזור מסע: ירושלים, במחזור שהסתיים עכשיו.</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה למציאת עבודה לצעירים</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>.</p></div><div class="detail-section"><h4>הבעיה</h4><p>ישראלים רבים נתקלים במוצרים וטכנולוגיות שימושיות בחו&quot;ל. הם מתאהבים במוצר או בפתרון כלשהו ותוהים לעצמם- למה אין לי את זה בארץ?<br>רובם לא יעשו עם זה כלום.<br>חלקם יביאו איתם במזוודה דוגמית ויספרו לחברים.<br>ואולי אחד או שתיים גם יעתבו על זה פוסט בטוויטר או ינסו להבין מהצ&#x27;אט GPT למה זה לא קיים בישראל.</p></div><div class="detail-section"><h4>הפתרון</h4><p>ובכן,<br>אני רוצה להקים פלטפורמה לליווי יזמים בתהליך הייבוא (במובן המילולי והרעיוני) של רעיונות מחו&quot;ל לישראל.<br>בפלטפורמה זו, יזמים יוכלו לעבור שלבים נחוצים כגון- ניתוח שוק בארץ, הבנת הביקוש הספציפי, התאמות ואדפטציות מקומיות, ניהול תהליכיים בירוקיים של מכסים ותקינה, סקירת IP ו/או שת&quot;פים עם חברות מקור,  פנייה לספקים ולרשתות הפצה וכו&#x27;.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>הפלטפורמה תהווה one stop shop לכל התהליך- רשימת צ&#x27;קליסט מסודרת עם קישור לכל הפונקציות הנדרשות- רשויות ממשלתיות, ספקים וכו&#x27;.<br>נזכור שהרעיון מתבסס על כך שאין צורך להמציא את הגלגל מחדש- המשתמשים הרי מצאו כבר רעיון טוב ורק מבקשים להביא אותו לארץ. בין אם זה מערכת חיזוי זמנים לאוטובוסים שעובדת מצויין בסינגפור, או מיון אשפה בגרמניה. כאשר בעזרת המערכת שלנו הם יוכלו להתחיל עם רעיון ובעזרת כלי vibe coding ייעודיים גם להפוך אותו לרלוונטי בשוק הישראלי.<br>חשוב לציין שישנם שני אפיקים פוטנציאליים והם ייבוא מוצרים וטכנולוגיות פיזיות, והשני הוא &#x27;ייבוא&#x27; רעיונות עסקיים.</p></div>
+        
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(11)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(13)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-13" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>יואב פרידמן</h2>
+        <div class="detail-meta">
+            <span class="meta-item">ראשון לציון</span>
+            <span class="meta-item">מחזור מסע: ראשון לציון - מחזור נובמבר 2025</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה למשרות מזדמנות קצרות טווח עם שכר ידוע מראש</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>גיל 24, רקע במחשוב ולימודים טכנולוגיים מדעיים. לימודי תיכון במקיף י״ב בפיזיקה ומדעי ההנדסה, בצבא מנהל רשת בתקשוב ולאחר מכן עבודה בתור IT באזרחות</p></div><div class="detail-section"><h4>הבעיה</h4><p>הבעיה שזיהיתי היא מוטיבציה נמוכה לעבודה ורצון מאוד גדול בגמישות בעבודה של הדורות הצעירים,  הצעירים רוצים שהעבודה תסבוב סביב חייהם ולא שחייהם יסבבו סביב העבודה.<br>וגם, מחסור בעובדים בקרב עסקים פשוטים.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם שלי הוא פלטפורמה (אפליקציה / אתר) שבו מעסיקים יכולים לפרסם משרות מזדמנות (מלצרות, בר, קופה) לטווח קצר עם שכר ידוע מראש, פלטפורמה בה יכולים צעירים לעיין ולעבוד מתי שנוח להם לפי הפרסומים הקיימים.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>הפלטפורמה תבוסס על אפליקציה / ווב בדומה לוולט לדוגמה ותצריך פיתוח, אחסון וניהול טכנולוגי</p></div>
+        <a href="https://docs.google.com/presentation/d/1UHnVBUI4MguGS4X2pREBkmSF7NjPuKtu/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(12)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(14)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-14" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>עמית בן שטרית</h2>
+        <div class="detail-meta">
+            <span class="meta-item">אשדוד</span>
+            <span class="meta-item">מחזור מסע: אשדוד - 54</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה לחיבור שחקני כדורגל עם סקאוטים דרך קטעי וידאו</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני עובד כסקאוט כדורגל, ובמקביל מנהל קורסי הכשרה בחברת ישראכרט.<br><br>לאחרונה חוויתי אתגר מקצועי מהעבודה שלי כסקאוט. התפקיד של סקאוט הוא להיות במגרשים ולזהות כישרונות, אבל בפועל סקאוט אחד לא יכול להיות בכל משחק ובכל מקום.<br><br>כדי לגשר על הפער, פתחתי אינסטגרם ייעודי לחיפוש שחקנים צעירים שמעלים קטעים שלהם. גיליתי שיש שם הרבה כישרון, אבל הוא לא מגיע לקהל הנכון, סקאוטים ומועדונים, כי התוכן הולך לאיבוד בפיד כללי שלא בנוי לגילוי שחקנים.<br><br>האתגר הזה הוביל אותי לחשוב על פתרון, ומתוך העבודה בשטח נולד הרעיון לפלטפורמה ייעודית שמחברת בין שחקנים לסקאוטים בצורה פשוטה ומקצועית.</p></div><div class="detail-section"><h4>הבעיה</h4><p>שחקנים צעירים מעלים קטעים לרשתות חברתיות, אבל אין פלטפורמה ייעודית שמחברת אותם ישירות לסקאוטים ומועדונים. התוכן הולך לאיבוד בפלטפורמות כלליות, והסקאוטים מצדם מתקשים לסנן, לאתר ולעקוב בצורה מסודרת אחרי שחקנים רלוונטיים.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם מציע פלטפורמה ייעודית לשחקנים וסקאוטים. שחקנים יוצרים פרופיל מקצועי עם נתונים וקטעי וידאו, וסקאוטים יכולים לחפש לפי פילטרים מדויקים, לשמור שחקנים למעקב ולנהל תהליך סקאוטינג מסודר במקום אחד.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>המערכת מבוססת על פלטפורמה דיגיטלית עם מנוע חיפוש חכם לפי פרמטרים מקצועיים. בהמשך ניתן לשלב אלגוריתמים לניתוח וידאו, דירוג ביצועים והמלצות מבוססות נתונים שיסייעו לסקאוטים בקבלת החלטות.</p></div>
+        <a href="https://docs.google.com/presentation/d/1Vno_8DIk6oo7qILud_AENdmAwY7mHYNz/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(13)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(15)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-15" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>אורי גרשוני</h2>
+        <div class="detail-meta">
+            <span class="meta-item">אשדות יעקב</span>
+            <span class="meta-item">מחזור מסע: טבריה</span>
+        </div>
+        <div class="detail-venture"><h3>פלטפורמה לחיבור מתנדבים להזדמנויות התנדבות עם מערכת נקודות</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>אני בתקופה של שינוי מקצועי. עשיתי עלייה ממיאמי לארץ, השתחררתי לא מזמן מהשירות והתחלתי לעבוד בעבודה זמנית בשעות לא פשוטות, תוך כדי שאני מחפש כיוון שבו אוכל להתפתח וללמד — שזה משהו שאני יודע שאני טוב בו ואוהב לעשות. האתגר הכי גדול לאחרונה היה להסתגל לשינויים הגדולים — מדינה חדשה, מסגרת חדשה ועבודה תובענית — ובכל זאת לשמור על מוטיבציה ואמונה בדרך גם כשאין עדיין יציבות. למדתי להתמיד, לקחת אחריות, ולבנות צעדים קטנים קדימה במקום לחכות לפתרון מושלם.</p></div><div class="detail-section"><h4>הבעיה</h4><p>הצורך שזיהיתי הוא שיש הרבה אנשים שרוצים להתנדב ולעזור, אבל אין מסגרת פשוטה ומסודרת שמחברת בין מי שצריך עזרה לבין מי שמוכן לתת מזמנו. בנוסף, הרבה מתנדבים מרגישים שלעשייה שלהם אין המשכיות או הכרה, ולכן עם הזמן המוטיבציה יורדת. <br><br>המיזם שלי נותן מענה לבעיה הזו דרך פלטפורמה שמרכזת הזדמנויות להתנדבות, יוצרת חיבורים בין אנשים, וגם נותנת תמריץ חיובי בדמות נקודות שאפשר לממש לשירותים קהילתיים. כך נוצר מעגל של נתינה הדדית שמחזיק לאורך זמן ומגדיל את המעורבות בקהילה.</p></div><div class="detail-section"><h4>הפתרון</h4><p>המיזם שלי פותר את הבעיה על ידי יצירת פלטפורמה מרכזית שמחברת בין אנשים שרוצים להתנדב לבין הזדמנויות בקהילה. הוא מספק מסגרת מסודרת שמאפשרת למתנדבים לראות בקלות איך ומתי הם יכולים לתרום, לעקוב אחרי הפעילות שלהם, ולצבור נקודות על העשייה. הנקודות האלה ניתנות למימוש לקבלת שירותים מקהילה של מתנדבים אחרים, מה שיוצר תמריץ ומחזיק את המוטיבציה גבוהה לאורך זמן. בצורה זו, המיזם גם מגביר את המעורבות, גם מאפשר תרומה משמעותית, וגם מחזק ערבות הדדית בקהילה.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>ההיבט הטכנולוגי במיזם מתמקד בפיתוח פלטפורמה דיגיטלית שתאפשר:<br><br>1. מעקב אחר התנדבות – כל מתנדב יכול לראות את הפעילות שלו, לצבור נקודות ולבדוק את ההיסטוריה שלו בצורה שקופה.<br>2. מערכת נקודות ותמריצים – הפלטפורמה מחשבת אוטומטית נקודות על פי סוג ההתנדבות, ומאפשרת לממש אותן לשירותים של מתנדבים אחרים.<br>3. חיבור בין משתמשים – כלי חיפוש והתאמה בין מי שמציע שירות לבין מי שמחפש עזרה, בצורה נוחה ומהירה.<br>4. ניהול קהילה ואירועים – ארגונים ועמותות יכולים לפרסם הזדמנויות התנדבות, לשלוח עדכונים ולהגביר את המעורבות של המתנדבים.<br><br>כל ההיבטים האלה נבנים בצורה ידידותית למשתמש, עם דגש על חוויית שימוש פשוטה ומעניינת, כדי לעודד מעורבות מתמשכת וליצור מערכת שמחזיקה את הקהילה פעילה לאורך זמן.</p></div>
+        <a href="https://drive.google.com/file/d/1EVsuMxNxXgVs849nsQRNDJBlF20ZUqYe/view?usp=sharing" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(14)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(16)" >הבא ←</button>
+    </div>
+</div>
+<div id="detail-16" class="detail-view">
+    <button class="back-btn" onclick="showMain()">&rarr; חזרה לרשימה</button>
+    <div class="detail-card">
+        <h2>מתן לביא וגיא סוקולצקי</h2>
+        <div class="detail-meta">
+            <span class="meta-item">מבוא ביתר / קריית ים</span>
+            <span class="meta-item">מחזור מסע: ירושלים (חורף 25)</span>
+        </div>
+        <div class="detail-venture"><h3>&#x27;מורה פרטי&#x27; אדפטיבי ומערכת שיקוף</h3></div>
+        <div class="detail-section"><h4>רקע</h4><p>התחלתי לאחרונה לעבוד כמדריך בקורס Python לילדים, די מהר נוכחתי לראות שחומרי הלימוד הם באנגלית בלבד וברמה גבוהה שלא מותאמת אליהם. כדי שהלמידה תהיה יעילה והתלמידים יחוו תחושת הצלחה ומסוגלות, החלטתי להכין לכל שיעור רשימת שאלות קטנות וממוקדות, ברמת קושי עולה. השינוי עזר לתלמידים להפנים את החומר בצורה חלקה, והפך את התסכול ההתחלתי שלהם למוטיבציה וביטחון עצמי.</p></div><div class="detail-section"><h4>הבעיה</h4><p>הבעיה היא שתרגול מתמטי עצמאי בבית הוא כרגע &#x27;עיוור&#x27; למצבו של התלמיד. כשתלמיד (או סטודנט) מתרגל לבד ונתקע, הפתרונות הקיימים בדרך כלל רק מספקים תשובה סופית או הסבר טכני אחיד. הם לא יודעים לאבחן למה הוא נתקע - האם יש לו פער ספציפי בהבנה שצריך לפרק, או שהוא בכלל נמצא בהצפה קוגניטיבית, בלבול וחרדה.<br><br>כתוצאה מכך, התלמיד ממשיך להיתקל בשאלות באותה רמת קושי, נכשל שוב, ונכנס ללופ של תסכול. הבעיה שאני רוצה לפתור היא הייאוש והפגיעה בביטחון העצמי שנוצרים שם. הצורך הוא במערכת תרגול שיודעת לזהות את מקור הקושי בזמן אמת, ולהתאים את התרגיל הבא בדיוק למה שהתלמיד צריך באותו רגע.</p></div><div class="detail-section"><h4>הפתרון</h4><p>הפתרון הוא לבנות פלטפורמת תרגול אדפטיבית שמתפקדת כמו מורה פרטי שיושב ליד התלמיד. המערכת תעקוב בזמן אמת לא רק אחרי התשובות (נכון/לא נכון), אלא גם אחרי מדדי התנהגות כמו זמן השהיה, מחיקות מרובות או קצב פתרון. כשהמערכת תזהה שהתלמיד תקוע או נכנס ללחץ, היא לא תציג מיד את הפתרון, אלא תבצע התאמה דינמית. קודם כל, היא תפרק את השאלה לחלקים קטנים יותר כדי לאתר את פער ההבנה הספציפי. במקביל, אם יזוהה תסכול משמעותי, המערכת תיקח באופן יזום &#x27;צעד אחורה&#x27; ותגיש תרגיל קל יותר באותו נושא. המטרה היא לייצר לתלמיד חווית הצלחה מהירה שתחזיר לו את תחושת המסוגלות והביטחון, ורק לאחר מכן לחזור ולהעלות את רמת הקושי בהדרגה מותאמת אישית.</p></div><div class="detail-section"><h4>היבט טכנולוגי</h4><p>ההיבט הטכנולוגי מתחלק לשני מרכיבים עיקריים. הראשון הוא אלגוריתם עצמאי שיודע לנתח, לפרק ולפשט תרגילים מתמטיים לתת-שלבים, ולספק תרגילים מותאמים לפי הצורך. המרכיב השני כולל מעקב אחרי מדדי התנהגות של המשתמש בזמן הפתרון (לדוג&#x27;: זמני השהיה, קצב הקלדה, כפתור עזרה) כדי לזהות תקיעות או מצוקה בזמן אמת, ולהפעיל את אלגוריתם הפישוט. הליבה הלוגית של המערכת תישאר עצמאית וחסכונית, והיא תוכנן כך שתוכל להתממשק ב-API עם כלי AI חיצוניים לטובת פיצ&#x27;רים משלימים.</p></div>
+        <a href="https://docs.google.com/presentation/d/1DDr6iP2FXbIxqh_p8TSY_p42OXREiBrO/edit?usp=sharing&amp;ouid=101438880134021122534&amp;rtpof=true&amp;sd=true" target="_blank" class="pres-btn">📊 צפה במצגת</a>
+    </div>
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showDetail(15)" >→ הקודם</button>
+        <button class="nav-btn" onclick="showDetail(17)" disabled>הבא ←</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+function showDetail(idx) {
+    document.getElementById('mainView').classList.add('hidden');
+    document.querySelectorAll('.detail-view').forEach(d => d.classList.remove('active'));
+    document.getElementById('detail-' + idx).classList.add('active');
+    window.scrollTo(0, 0);
+}
+function showMain() {
+    document.getElementById('mainView').classList.remove('hidden');
+    document.querySelectorAll('.detail-view').forEach(d => d.classList.remove('active'));
+    window.scrollTo(0, 0);
+}
+</script>
+
 </body>
 </html>
